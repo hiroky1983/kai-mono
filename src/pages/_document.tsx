@@ -50,7 +50,7 @@ class MyDocument extends Document {
           <meta name="theme-color" content="#000" />
           <meta name="description" content="this is myapp" />
           <link rel="icon" sizes="192x192" href="/icon-192x192.png" />
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href="/kai-mono__1_-removebg-preview.png" />
           <link rel="manifest" href="/manifest.json" />
           <title>kai-mono</title>
         </Head>
