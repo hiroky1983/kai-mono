@@ -12,6 +12,8 @@ type Props = {
 const Container = (props: Props) => {
   const { user } = Auth.useUser();
 
+  console.log(user);
+
   // ログインしている場合
   if (user) {
     return (
