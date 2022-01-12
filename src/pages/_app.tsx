@@ -1,6 +1,7 @@
+import { AppProps } from 'next/dist/shared/lib/router/router'
 import 'tailwindcss/tailwind.css'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
 }
 
