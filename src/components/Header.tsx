@@ -5,11 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const Header: VFC = () => {
+  
   return (
-    <header
-      className="flex justify-between gap-4 text-gray-600 bg›
-›-gray-200 items-center"
-    >
+    <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 items-center">
       <Link href="/">
         <a>
           <Image
