@@ -1,6 +1,6 @@
-import { Auth, Button, IconLogOut } from "@supabase/ui";
+import { Auth, Button } from "@supabase/ui";
 import { NextPage } from "next";
-import type { ReactNode } from "react";
+import { ChangeEvent, ReactNode, useState } from "react";
 import React from "react";
 import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
@@ -10,27 +10,34 @@ type Props = {
 };
 
 const Container = (props: Props) => {
+  const [inputText, setInputText] = useState("");
   const { user } = Auth.useUser();
 
-  console.log(user);
-
-  // ログインしている場合
   if (user) {
     return (
       <div>
-        <div className="flex justify-end mx-2 my-4">
-          <Button
+        <div className="flex">
+          <input
+            type="text"
+            className="mr-2 px-2 py-1 w-4/5 rounded-md ring-1 ring-green-400 focus-within:ring-green-500"
+            placeholder="買うものを入力"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInputText(e.target.value)
+            }
+          />
+          <Button className="inline-block">追加</Button>
+
+          {/* <Button
             size="medium"
             icon={<IconLogOut />}
             onClick={() => supabase.auth.signOut()}
           >
             Sign out
-          </Button>
+          </Button> */}
         </div>
       </div>
     );
   }
-  // ログインしていない場合
   return <>{props.children}</>;
 };
 
