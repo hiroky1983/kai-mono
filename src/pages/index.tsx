@@ -1,9 +1,12 @@
-import { Auth, Button } from "@supabase/ui";
+import { Auth } from "@supabase/ui";
 import { NextPage } from "next";
 import { ChangeEvent, ReactNode, useState } from "react";
 import React from "react";
 import { Layout } from "../components/Layout";
+import { List } from "../components/List";
 import { supabase } from "../libs/supabase";
+import { WaitList } from "../components/WaitList";
+import { InputArea } from "../components/InputArea";
 
 type Props = {
   children: ReactNode;
@@ -11,29 +14,51 @@ type Props = {
 
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
+  const [waitApploveItems, setWaitApploveItems] = useState([]);
+  const [apploveItems, setApploveItems] = useState([]);
   const { user } = Auth.useUser();
+  console.log("街", waitApploveItems);
+  console.log("しゃーなし", apploveItems);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputText(e.target.value);
+  };
+
+  const onClickAddWaitItems = () => {
+    if (inputText === "") return;
+    const newItems = [...waitApploveItems, inputText];
+    setWaitApploveItems(newItems);
+    setInputText("");
+  };
+  const onClickAddItems = (i: number) => {
+    const newWaitItems = [...waitApploveItems];
+    newWaitItems.splice(i, 1);
+
+    const newItems = [...apploveItems, waitApploveItems[i]];
+    setWaitApploveItems(newWaitItems);
+    setApploveItems(newItems);
+  };
 
   if (user) {
     return (
       <div>
-        <div className="flex">
-          <input
-            type="text"
-            className="mr-2 px-2 py-1 w-4/5 rounded-md ring-1 ring-green-400 focus-within:ring-green-500"
-            placeholder="買うものを入力"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setInputText(e.target.value)
-            }
-          />
-          <Button className="inline-block">追加</Button>
-
-          {/* <Button
-            size="medium"
-            icon={<IconLogOut />}
-            onClick={() => supabase.auth.signOut()}
-          >
-            Sign out
-          </Button> */}
+        <InputArea
+          inputText={inputText}
+          handleChange={handleChange}
+          onClickAddWaitItems={onClickAddWaitItems}
+        />
+        <div className="grid auto-rows-max">
+          <div className="mt-2">
+            <h2>承認待ちのアイテム</h2>
+            <WaitList
+              items={waitApploveItems}
+              onClickAddItems={onClickAddItems}
+            />
+          </div>
+          <div>
+            <h2 className="">買い物リスト</h2>
+            <List items={apploveItems} />
+          </div>
         </div>
       </div>
     );
@@ -46,7 +71,7 @@ const Home: NextPage = () => {
     <Layout>
       <Auth.UserContextProvider supabaseClient={supabase}>
         <Container>
-          <div className="flex justify-center pt-8">
+          <div className="pt-8">
             <div className="w-full sm:w-96">
               <Auth
                 supabaseClient={supabase}
