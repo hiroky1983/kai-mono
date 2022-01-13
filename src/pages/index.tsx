@@ -1,4 +1,4 @@
-import { Auth } from "@supabase/ui";
+import { Auth, IconAlertCircle, Modal } from "@supabase/ui";
 import { NextPage } from "next";
 import { ChangeEvent, ReactNode, useState } from "react";
 import React from "react";
@@ -16,12 +16,15 @@ const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
   const [waitApploveItems, setWaitApploveItems] = useState([]);
   const [apploveItems, setApploveItems] = useState([]);
+  const [visible, setVisible] = useState(false);
   const { user } = Auth.useUser();
-  console.log("街", waitApploveItems);
-  console.log("しゃーなし", apploveItems);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
+  };
+
+  const toggle = () => {
+    setVisible(!visible);
   };
 
   const onClickAddWaitItems = () => {
@@ -39,6 +42,19 @@ const Container = (props: Props) => {
     setApploveItems(newItems);
   };
 
+  const onClickShoppedItems = (i: number) => {
+    const newItems = [...apploveItems];
+    newItems.splice(i, 1);
+    setApploveItems(newItems);
+  };
+
+  const onClickDeleteItems = (i: number) => {
+    const newItems = [...waitApploveItems];
+    newItems.splice(i, 1);
+    setWaitApploveItems(newItems);
+    toggle();
+  };
+
   if (user) {
     return (
       <div>
@@ -47,19 +63,32 @@ const Container = (props: Props) => {
           handleChange={handleChange}
           onClickAddWaitItems={onClickAddWaitItems}
         />
-        <div className="grid auto-rows-max">
-          <div className="mt-2">
-            <h2>承認待ちのアイテム</h2>
+        <div>
+          <div className="mt-2 h-60">
+            <h2 className="text-xl">承認待ちのアイテム</h2>
             <WaitList
               items={waitApploveItems}
               onClickAddItems={onClickAddItems}
+              onClickDeleteItems={toggle}
             />
           </div>
-          <div>
-            <h2 className="">買い物リスト</h2>
-            <List items={apploveItems} />
+          <div className="h-60">
+            <h2 className="text-xl">買い物リスト</h2>
+            <List
+              items={apploveItems}
+              onClickShoppedItems={onClickShoppedItems}
+            />
           </div>
         </div>
+        <Modal
+          title="削除"
+          description="こちらのアイテムを削除してもよろしいですか？"
+          visible={visible}
+          onCancel={toggle}
+          onConfirm={onClickDeleteItems}
+          variant="danger"
+          icon={<IconAlertCircle background="red" size="xlarge" />}
+        ></Modal>
       </div>
     );
   }
