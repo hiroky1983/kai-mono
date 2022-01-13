@@ -1,13 +1,23 @@
-import React, { VFC } from "react";
+import React, { useEffect, useState, VFC } from "react";
 import { Toggle } from "@supabase/ui";
 
 import Link from "next/link";
 import Image from "next/image";
 
 export const Header: VFC = () => {
-  
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
   return (
-    <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 items-center">
+    <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center">
       <Link href="/">
         <a>
           <Image
@@ -23,7 +33,7 @@ export const Header: VFC = () => {
           <h1>kai-mono</h1>
         </a>
       </Link>
-      <Toggle className="mr-4" />
+      <Toggle className="mr-4" onChange={toggleDarkMode} />
     </header>
   );
 };
