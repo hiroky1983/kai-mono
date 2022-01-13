@@ -3,10 +3,11 @@ import React, { VFC } from "react";
 type Props = {
   items: string[];
   onClickAddItems: (i: number) => void;
+  onClickDeleteItems: () => void;
 };
 
 export const WaitList: VFC<Props> = (props) => {
-  const { items, onClickAddItems } = props;
+  const { items, onClickAddItems, onClickDeleteItems } = props;
   return (
     <div>
       <ul>
@@ -23,7 +24,10 @@ export const WaitList: VFC<Props> = (props) => {
               >
                 OK
               </button>
-              <button className="inline-block px-3 py-1 bg-green-400 text-white rounded-lg">
+              <button
+                onClick={onClickDeleteItems}
+                className="inline-block px-3 py-1 bg-green-400 text-white rounded-lg"
+              >
                 要らない
               </button>
             </div>
