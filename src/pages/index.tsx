@@ -1,59 +1,99 @@
-import { Auth, IconAlertCircle, Modal } from "@supabase/ui";
+import { Auth } from "@supabase/ui";
 import { NextPage } from "next";
-import { ChangeEvent, ReactNode, useState } from "react";
+import {
+  ChangeEvent,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import React from "react";
 import { Layout } from "../components/Layout";
 import { List } from "../components/List";
 import { supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
+import { SupabaseRealtimeClient } from "@supabase/supabase-js/dist/main/lib/SupabaseRealtimeClient";
 
 type Props = {
   children: ReactNode;
+};
+
+type ItemsData = {
+  id: string;
+  user_id: string;
+  itemName: string;
+  approve: boolean;
+  shopped: boolean;
+  created_at: Date;
 };
 
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
   const [waitApploveItems, setWaitApploveItems] = useState([]);
   const [apploveItems, setApploveItems] = useState([]);
-  const [visible, setVisible] = useState(false);
+  const [initialData, setInitialData] = useState<ItemsData>({
+    id: "",
+    user_id: "",
+    itemName: "",
+    approve: false,
+    shopped: false,
+    created_at: new Date(),
+  });
   const { user } = Auth.useUser();
+  console.log(user);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
-  };
+  }, []);
 
-  const toggle = () => {
-    setVisible(!visible);
-  };
-
-  const onClickAddWaitItems = () => {
+  const onClickAddWaitItems = useCallback(() => {
     if (inputText === "") return;
     const newItems = [...waitApploveItems, inputText];
     setWaitApploveItems(newItems);
     setInputText("");
-  };
-  const onClickAddItems = (i: number) => {
-    const newWaitItems = [...waitApploveItems];
-    newWaitItems.splice(i, 1);
+  }, [inputText, waitApploveItems]);
 
-    const newItems = [...apploveItems, waitApploveItems[i]];
-    setWaitApploveItems(newWaitItems);
-    setApploveItems(newItems);
-  };
+  const onClickAddItems = useCallback(
+    (i: number) => {
+      const newWaitItems = [...waitApploveItems];
+      newWaitItems.splice(i, 1);
 
-  const onClickShoppedItems = (i: number) => {
-    const newItems = [...apploveItems];
-    newItems.splice(i, 1);
-    setApploveItems(newItems);
-  };
+      const newItems = [...apploveItems, waitApploveItems[i]];
+      setWaitApploveItems(newWaitItems);
+      setApploveItems(newItems);
+    },
+    [waitApploveItems, apploveItems]
+  );
 
-  const onClickDeleteItems = (i: number) => {
-    const newItems = [...waitApploveItems];
-    newItems.splice(i, 1);
-    setWaitApploveItems(newItems);
-    toggle();
-  };
+  const onClickShoppedItems = useCallback(
+    (i: number) => {
+      const newItems = [...apploveItems];
+      newItems.splice(i, 1);
+      setApploveItems(newItems);
+    },
+    [apploveItems]
+  );
+
+  const onClickDeleteItems = useCallback(
+    (i: number) => {
+      const newItems = [...waitApploveItems];
+      newItems.splice(i, 1);
+      setWaitApploveItems(newItems);
+    },
+    [waitApploveItems]
+  );
 
   if (user) {
     return (
@@ -69,7 +109,7 @@ const Container = (props: Props) => {
             <WaitList
               items={waitApploveItems}
               onClickAddItems={onClickAddItems}
-              onClickDeleteItems={toggle}
+              onClickDeleteItems={onClickDeleteItems}
             />
           </div>
           <div className="h-60">
@@ -80,15 +120,6 @@ const Container = (props: Props) => {
             />
           </div>
         </div>
-        <Modal
-          title="削除"
-          description="こちらのアイテムを削除してもよろしいですか？"
-          visible={visible}
-          onCancel={toggle}
-          onConfirm={onClickDeleteItems}
-          variant="danger"
-          icon={<IconAlertCircle background="red" size="xlarge" />}
-        ></Modal>
       </div>
     );
   }
