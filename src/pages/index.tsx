@@ -30,8 +30,8 @@ type ItemsData = {
 
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
-  const [waitApploveItems, setWaitApploveItems] = useState([]);
-  const [apploveItems, setApploveItems] = useState([]);
+  const [waitApproveItems, setwaitApproveItems] = useState([]);
+  const [approveItems, setapproveItems] = useState([]);
   const [initialData, setInitialData] = useState<ItemsData>({
     id: "",
     user_id: "",
@@ -60,39 +60,39 @@ const Container = (props: Props) => {
 
   const onClickAddWaitItems = useCallback(() => {
     if (inputText === "") return;
-    const newItems = [...waitApploveItems, inputText];
-    setWaitApploveItems(newItems);
+    const newItems = [...waitApproveItems, inputText];
+    setwaitApproveItems(newItems);
     setInputText("");
-  }, [inputText, waitApploveItems]);
+  }, [inputText, waitApproveItems]);
 
   const onClickAddItems = useCallback(
     (i: number) => {
-      const newWaitItems = [...waitApploveItems];
+      const newWaitItems = [...waitApproveItems];
       newWaitItems.splice(i, 1);
 
-      const newItems = [...apploveItems, waitApploveItems[i]];
-      setWaitApploveItems(newWaitItems);
-      setApploveItems(newItems);
+      const newItems = [...approveItems, waitApproveItems[i]];
+      setwaitApproveItems(newWaitItems);
+      setapproveItems(newItems);
     },
-    [waitApploveItems, apploveItems]
+    [waitApproveItems, approveItems]
   );
 
   const onClickShoppedItems = useCallback(
     (i: number) => {
-      const newItems = [...apploveItems];
+      const newItems = [...approveItems];
       newItems.splice(i, 1);
-      setApploveItems(newItems);
+      setapproveItems(newItems);
     },
-    [apploveItems]
+    [approveItems]
   );
 
   const onClickDeleteItems = useCallback(
     (i: number) => {
-      const newItems = [...waitApploveItems];
+      const newItems = [...waitApproveItems];
       newItems.splice(i, 1);
-      setWaitApploveItems(newItems);
+      setwaitApproveItems(newItems);
     },
-    [waitApploveItems]
+    [waitApproveItems]
   );
 
   if (user) {
@@ -107,7 +107,7 @@ const Container = (props: Props) => {
           <div className="mt-2 h-60">
             <h2 className="text-xl">承認待ちのアイテム</h2>
             <WaitList
-              items={waitApploveItems}
+              items={waitApproveItems}
               onClickAddItems={onClickAddItems}
               onClickDeleteItems={onClickDeleteItems}
             />
@@ -115,7 +115,7 @@ const Container = (props: Props) => {
           <div className="h-60">
             <h2 className="text-xl">買い物リスト</h2>
             <List
-              items={apploveItems}
+              items={approveItems}
               onClickShoppedItems={onClickShoppedItems}
             />
           </div>
