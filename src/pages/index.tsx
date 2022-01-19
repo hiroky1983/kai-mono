@@ -43,8 +43,6 @@ const Container = (props: Props) => {
   const { user } = Auth.useUser();
   const router = useRouter();
   const { id } = router.query;
-  console.log(user);
-
 
   useEffect(() => {
     getData();
