@@ -43,16 +43,22 @@ const Container = (props: Props) => {
   const { user } = Auth.useUser();
   const router = useRouter();
   const { id } = router.query;
+  console.log(user);
+
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [user, setwaitApproveItems]);
 
   const getData = async () => {
     try {
       const list = await supabase.from("kai-mono-list").select("itemName")
       const itemName = list.data
       console.log("itemname", itemName);
+      const i = itemName.map((i) => {
+        return i.itemName;
+      })
+      setwaitApproveItems(i)
     } catch (error) {
       console.log(error);
     }
