@@ -14,13 +14,14 @@ import { supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
 import { SupabaseRealtimeClient } from "@supabase/supabase-js/dist/main/lib/SupabaseRealtimeClient";
+import { useRouter } from "next/dist/client/router";
 
 type Props = {
   children: ReactNode;
 };
 
 type ItemsData = {
-  id: string;
+  id: number;
   user_id: string;
   itemName: string;
   approve: boolean;
@@ -33,14 +34,18 @@ const Container = (props: Props) => {
   const [waitApproveItems, setwaitApproveItems] = useState([]);
   const [approveItems, setapproveItems] = useState([]);
   const [initialData, setInitialData] = useState<ItemsData>({
-    id: "",
+    id: 0,
     user_id: "",
     itemName: "",
     approve: false,
     shopped: false,
-    created_at: new Date(),
+    created_at: null,
   });
   const { user } = Auth.useUser();
+  const router = useRouter();
+  const { id } = router.query;
+  const list = supabase.from("kai-mono-list").select()
+  console.log(initialData);
   console.log(user);
 
   useEffect(() => {
@@ -58,10 +63,22 @@ const Container = (props: Props) => {
     setInputText(e.target.value);
   }, []);
 
-  const onClickAddWaitItems = useCallback(() => {
+  const onClickAddWaitItems = useCallback(async (i) => {
     if (inputText === "") return;
     const newItems = [...waitApproveItems, inputText];
     setwaitApproveItems(newItems);
+    i = 1
+    const updateData = {
+      id: ++i,
+      user_id: user.id,
+      itemName: inputText,
+      approve: false,
+      shopped: false,
+      created_at: new Date(),
+    }
+    setInitialData(updateData)
+    const saveItem = await supabase.from("kai-mono-list").insert([initialData]).eq(user.id, initialData.user_id)
+    console.log(saveItem);
     setInputText("");
   }, [inputText, waitApproveItems]);
 
@@ -101,7 +118,7 @@ const Container = (props: Props) => {
         <InputArea
           inputText={inputText}
           handleChange={handleChange}
-          onClickAddWaitItems={onClickAddWaitItems}
+          onClickAddWaitItems={(i) => onClickAddWaitItems(i)}
         />
         <div>
           <div className="mt-2 h-60">
