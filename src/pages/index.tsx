@@ -32,6 +32,7 @@ const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
   const [waitApproveItems, setwaitApproveItems] = useState([]);
   const [approveItems, setapproveItems] = useState([]);
+  const [maxId, setMaxId] = useState(0);
   const [initialData, setInitialData] = useState<ItemsData>({
     id: 0,
     user_id: "",
@@ -50,13 +51,16 @@ const Container = (props: Props) => {
 
   const getData = async () => {
     try {
-      const list = await supabase.from("kai-mono-list").select("itemName")
-      const itemName = list.data
-      console.log("itemname", itemName);
-      const i = itemName.map((i) => {
+      const list = await supabase.from("kai-mono-list").select()
+      const listData = list.data;
+      const itemLists = listData.map((i) => {
         return i.itemName;
       })
-      setwaitApproveItems(i)
+      setwaitApproveItems(itemLists)
+      const num = listData.map((i) => {
+        return i.id
+      })
+      setMaxId(Math.max.apply(null, num))
     } catch (error) {
       console.log(error);
     }
@@ -66,13 +70,14 @@ const Container = (props: Props) => {
     setInputText(e.target.value);
   }, []);
 
-  const onClickAddWaitItems = useCallback(async (i) => {
+  const onClickAddWaitItems = useCallback(async (i: number) => {
     if (inputText === "") return;
     const newItems = [...waitApproveItems, inputText];
     setwaitApproveItems(newItems);
-    i = 2
+    console.log(i);
+
     const updateData = {
-      id: ++i,
+      id: maxId + 1,
       user_id: user.id,
       itemName: inputText,
       approve: false,
@@ -80,8 +85,7 @@ const Container = (props: Props) => {
       created_at: new Date(),
     }
     setInitialData(updateData)
-    const saveItem = await supabase.from("kai-mono-list").insert([initialData])
-    console.log(saveItem);
+    await supabase.from("kai-mono-list").insert([updateData])
     setInputText("");
   }, [inputText, waitApproveItems]);
 
@@ -110,6 +114,8 @@ const Container = (props: Props) => {
     (i: number) => {
       const newItems = [...waitApproveItems];
       newItems.splice(i, 1);
+      console.log(i);
+
       setwaitApproveItems(newItems);
     },
     [waitApproveItems]
