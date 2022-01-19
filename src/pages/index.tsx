@@ -13,7 +13,6 @@ import { List } from "../components/List";
 import { supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
-import { SupabaseRealtimeClient } from "@supabase/supabase-js/dist/main/lib/SupabaseRealtimeClient";
 import { useRouter } from "next/dist/client/router";
 
 type Props = {
@@ -44,9 +43,6 @@ const Container = (props: Props) => {
   const { user } = Auth.useUser();
   const router = useRouter();
   const { id } = router.query;
-  const list = supabase.from("kai-mono-list").select()
-  console.log(initialData);
-  console.log(user);
 
   useEffect(() => {
     getData();
@@ -54,6 +50,9 @@ const Container = (props: Props) => {
 
   const getData = async () => {
     try {
+      const list = await supabase.from("kai-mono-list").select("itemName")
+      const itemName = list.data
+      console.log("itemname", itemName);
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +66,7 @@ const Container = (props: Props) => {
     if (inputText === "") return;
     const newItems = [...waitApproveItems, inputText];
     setwaitApproveItems(newItems);
-    i = 1
+    i = 2
     const updateData = {
       id: ++i,
       user_id: user.id,
@@ -77,7 +76,7 @@ const Container = (props: Props) => {
       created_at: new Date(),
     }
     setInitialData(updateData)
-    const saveItem = await supabase.from("kai-mono-list").insert([initialData]).eq(user.id, initialData.user_id)
+    const saveItem = await supabase.from("kai-mono-list").insert([initialData])
     console.log(saveItem);
     setInputText("");
   }, [inputText, waitApproveItems]);
