@@ -19,28 +19,28 @@ type Props = {
   children: ReactNode;
 };
 
-type ItemsData = {
+type ItemsData = [{
   id: number;
   user_id: string;
   itemName: string;
   approve: boolean;
   shopped: boolean;
   created_at: Date;
-};
+}];
 
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
   const [waitApproveItems, setwaitApproveItems] = useState([]);
   const [approveItems, setapproveItems] = useState([]);
   const [maxId, setMaxId] = useState(0);
-  const [initialData, setInitialData] = useState<ItemsData>({
+  const [initialData, setInitialData] = useState<ItemsData>([{
     id: 0,
     user_id: "",
     itemName: "",
     approve: false,
     shopped: false,
     created_at: null,
-  });
+  }]);
   const { user } = Auth.useUser();
   const router = useRouter();
   const { id } = router.query;
@@ -77,7 +77,6 @@ const Container = (props: Props) => {
     if (inputText === "") return;
     const newItems = [...waitApproveItems, inputText];
     setwaitApproveItems(newItems);
-
     const updateData = {
       id: maxId + 1,
       user_id: user.id,
@@ -86,9 +85,7 @@ const Container = (props: Props) => {
       shopped: false,
       created_at: new Date(),
     }
-    console.log(updateData);
-
-    setInitialData(updateData)
+    setInitialData([updateData])
     await supabase.from("kai-mono-list").insert([updateData])
     setInputText("");
   }, [inputText, waitApproveItems]);
@@ -115,16 +112,23 @@ const Container = (props: Props) => {
   );
 
   const onClickDeleteItems = useCallback(
-    (i: number) => {
+    async (i: number) => {
       const newItems = [...waitApproveItems];
-      newItems.splice(i, 1);
-      console.log(i);
+      const list = await supabase.from("kai-mono-list").select()
+      const listData = list.data;
+      const resultData = listData.find((data) => {
+        console.log(data.name);
+        const item = newItems.splice(i, 1);
+        return data.name === item[0]
+      })
 
+      console.log(resultData);
+      await supabase.from("kai-mono-list").delete().match(resultData)
       setwaitApproveItems(newItems);
     },
     [waitApproveItems]
   );
-  console.log(maxId);
+  // console.log(maxId);
 
   if (user) {
     return (
