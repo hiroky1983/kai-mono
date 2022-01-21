@@ -57,10 +57,13 @@ const Container = (props: Props) => {
         return i.itemName;
       })
       setwaitApproveItems(itemLists)
-      const num = listData.map((i) => {
-        return i.id
+      listData.forEach((i) => {
+        if (!i) {
+          setMaxId(0)
+        } else {
+          setMaxId(Math.max(i.id))
+        }
       })
-      setMaxId(Math.max.apply(null, num))
     } catch (error) {
       console.log(error);
     }
@@ -74,7 +77,6 @@ const Container = (props: Props) => {
     if (inputText === "") return;
     const newItems = [...waitApproveItems, inputText];
     setwaitApproveItems(newItems);
-    console.log(i);
 
     const updateData = {
       id: maxId + 1,
@@ -84,6 +86,8 @@ const Container = (props: Props) => {
       shopped: false,
       created_at: new Date(),
     }
+    console.log(updateData);
+
     setInitialData(updateData)
     await supabase.from("kai-mono-list").insert([updateData])
     setInputText("");
@@ -120,6 +124,7 @@ const Container = (props: Props) => {
     },
     [waitApproveItems]
   );
+  console.log(maxId);
 
   if (user) {
     return (
