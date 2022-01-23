@@ -1,9 +1,10 @@
 import React, { VFC } from "react";
+import { ItemsData } from "../pages";
 
 type Props = {
-  items: string[];
-  onClickAddItems: (i: number) => void;
-  onClickDeleteItems: (i) => void;
+  items: ItemsData[];
+  onClickAddItems: () => void;
+  onClickDeleteItems: () => void;
 };
 
 export const WaitList: VFC<Props> = (props) => {
@@ -11,21 +12,21 @@ export const WaitList: VFC<Props> = (props) => {
   return (
     <div>
       <ul>
-        {items.map((item, i) => {
+        {items && items.map((item) => {
           return (
             <div
               className="flex my-1 items-center justify-between gap-2"
-              key={i}
+              key={item.id}
             >
-              <li className="flex-grow">{item}</li>
+              <li className="flex-grow">{item.itemName}</li>
               <button
-                onClick={() => onClickAddItems(i)}
+                onClick={() => onClickAddItems()}
                 className="inline-block px-3 py-1 bg-green-400 text-white rounded-lg"
               >
                 OK
               </button>
               <button
-                onClick={() => onClickDeleteItems(i)}
+                onClick={() => onClickDeleteItems()}
                 className="inline-block px-3 py-1 bg-green-400 text-white rounded-lg"
               >
                 要らない

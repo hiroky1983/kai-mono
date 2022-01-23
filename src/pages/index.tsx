@@ -19,51 +19,47 @@ type Props = {
   children: ReactNode;
 };
 
-type ItemsData = [{
+export type ItemsData = {
   id: number;
   user_id: string;
   itemName: string;
   approve: boolean;
   shopped: boolean;
   created_at: Date;
-}];
+};
 
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
-  const [waitApproveItems, setwaitApproveItems] = useState([]);
-  const [approveItems, setapproveItems] = useState([]);
+  const [waitApproveItems, setWaitApproveItems] = useState<ItemsData[]>();
+  const [approveItems, setApproveItems] = useState<ItemsData[]>();
   const [maxId, setMaxId] = useState(0);
-  const [initialData, setInitialData] = useState<ItemsData>([{
-    id: 0,
-    user_id: "",
-    itemName: "",
-    approve: false,
-    shopped: false,
-    created_at: null,
-  }]);
+  const [initialData, setInitialData] = useState<ItemsData[]>();
   const { user } = Auth.useUser();
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
     getData();
-  }, [user, setwaitApproveItems]);
+  }, [user, setWaitApproveItems]);
 
   const getData = async () => {
     try {
-      const list = await supabase.from("kai-mono-list").select()
-      const listData = list.data;
-      const itemLists = listData.map((i) => {
-        return i.itemName;
-      })
-      setwaitApproveItems(itemLists)
+      const list = await supabase.from("kai-mono-list").select();
+      const listData = list.data as ItemsData[];
+      setInitialData(listData);
+
+      const appItem = listData.filter((item) => item.approve === true);
+      const waitItem = listData.filter((item) => item.approve === false);
+      setApproveItems(appItem);
+      setWaitApproveItems(waitItem);
+
       listData.forEach((i) => {
         if (!i) {
-          setMaxId(0)
+          setMaxId(0);
         } else {
-          setMaxId(Math.max(i.id))
+          setMaxId(Math.max(i.id));
         }
-      })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -73,22 +69,25 @@ const Container = (props: Props) => {
     setInputText(e.target.value);
   }, []);
 
-  const onClickAddWaitItems = useCallback(async (i: number) => {
-    if (inputText === "") return;
-    const newItems = [...waitApproveItems, inputText];
-    setwaitApproveItems(newItems);
-    const updateData = {
-      id: maxId + 1,
-      user_id: user.id,
-      itemName: inputText,
-      approve: false,
-      shopped: false,
-      created_at: new Date(),
-    }
-    setInitialData([updateData])
-    await supabase.from("kai-mono-list").insert([updateData])
-    setInputText("");
-  }, [inputText, waitApproveItems]);
+  const onClickAddWaitItems = useCallback(
+    async (i: number) => {
+      if (inputText === "") return;
+      const newItems = [...waitApproveItems, inputText];
+      setWaitApproveItems(newItems);
+      const updateData = {
+        id: maxId + 1,
+        user_id: user.id,
+        itemName: inputText,
+        approve: false,
+        shopped: false,
+        created_at: new Date(),
+      };
+      setInitialData([updateData]);
+      await supabase.from("kai-mono-list").insert([updateData]);
+      setInputText("");
+    },
+    [inputText, waitApproveItems]
+  );
 
   const onClickAddItems = useCallback(
     (i: number) => {
@@ -96,8 +95,8 @@ const Container = (props: Props) => {
       newWaitItems.splice(i, 1);
 
       const newItems = [...approveItems, waitApproveItems[i]];
-      setwaitApproveItems(newWaitItems);
-      setapproveItems(newItems);
+      setWaitApproveItems(newWaitItems);
+      setApproveItems(newItems);
     },
     [waitApproveItems, approveItems]
   );
@@ -106,7 +105,7 @@ const Container = (props: Props) => {
     (i: number) => {
       const newItems = [...approveItems];
       newItems.splice(i, 1);
-      setapproveItems(newItems);
+      setApproveItems(newItems);
     },
     [approveItems]
   );
@@ -114,21 +113,23 @@ const Container = (props: Props) => {
   const onClickDeleteItems = useCallback(
     async (i: number) => {
       const newItems = [...waitApproveItems];
-      const list = await supabase.from("kai-mono-list").select()
+      const list = await supabase.from("kai-mono-list").select();
       const listData = list.data;
       const resultData = listData.find((data) => {
         console.log(data.name);
         const item = newItems.splice(i, 1);
-        return data.name === item[0]
-      })
+        return data.name === item[0];
+      });
 
       console.log(resultData);
-      await supabase.from("kai-mono-list").delete().match(resultData)
-      setwaitApproveItems(newItems);
+      await supabase.from("kai-mono-list").delete().match(resultData);
+      setWaitApproveItems(newItems);
     },
     [waitApproveItems]
   );
   // console.log(maxId);
+  console.log(approveItems);
+  console.log(waitApproveItems);
 
   if (user) {
     return (
