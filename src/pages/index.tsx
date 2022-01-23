@@ -72,8 +72,6 @@ const Container = (props: Props) => {
   const onClickAddWaitItems = useCallback(
     async (i: number) => {
       if (inputText === "") return;
-      const newItems = [...waitApproveItems, inputText];
-      setWaitApproveItems(newItems);
       const updateData = {
         id: maxId + 1,
         user_id: user.id,
@@ -82,8 +80,10 @@ const Container = (props: Props) => {
         shopped: false,
         created_at: new Date(),
       };
+      const newItems = [...waitApproveItems, updateData];
+      setWaitApproveItems(newItems);
       setInitialData([updateData]);
-      await supabase.from("kai-mono-list").insert([updateData]);
+      await supabase.from("kai-mono-list").insert(updateData);
       setInputText("");
     },
     [inputText, waitApproveItems]
@@ -91,6 +91,7 @@ const Container = (props: Props) => {
 
   const onClickAddItems = useCallback(
     (i: number) => {
+
       const newWaitItems = [...waitApproveItems];
       newWaitItems.splice(i, 1);
 
