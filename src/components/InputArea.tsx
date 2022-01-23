@@ -2,7 +2,7 @@ import React, { VFC } from "react";
 
 type Props = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClickAddWaitItems: (i) => void;
+  onClickAddWaitItems: () => void;
   inputText: string;
 };
 
