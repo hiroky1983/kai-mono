@@ -7,7 +7,7 @@ const THIS_YEAR = new Date().getFullYear();
 
 export const Footer: VFC = () => {
   return (
-    <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-around">
+    <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center gap-1">
       <Button
         size="medium"
         icon={<IconLogOut />}
