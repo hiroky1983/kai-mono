@@ -1,4 +1,4 @@
-import { Auth } from "@supabase/ui";
+import { Auth, Button } from "@supabase/ui";
 import { NextPage } from "next";
 import {
   ChangeEvent,
@@ -10,7 +10,7 @@ import {
 import React from "react";
 import { Layout } from "../components/Layout";
 import { List } from "../components/List";
-import { supabase } from "../libs/supabase";
+import { handleLogin, supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
 import { useRouter } from "next/dist/client/router";
@@ -133,7 +133,6 @@ const Container = (props: Props) => {
     },
     [waitApproveItems]
   );
-  console.log(maxId);
 
   if (user) {
     return (
@@ -178,6 +177,12 @@ const Home: NextPage = () => {
                 providers={["google"]}
                 socialColors={true}
               />
+              {/* <Button
+                style={{ marginTop: "30px", width: "100%" }}
+                onClick={handleLogin}
+              >
+                テストログイン
+              </Button> */}
             </div>
           </div>
         </Container>
