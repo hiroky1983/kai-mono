@@ -53,7 +53,6 @@ const Container = (props: Props) => {
       setApproveItems(appItem);
       setWaitApproveItems(waitItem);
 
-      //todo maxidの取得方法
       listData.forEach((i) => {
         if (!i) {
           setMaxId(0);
@@ -172,11 +171,11 @@ const Home: NextPage = () => {
         <Container>
           <div className="pt-8">
             <div className="w-full sm:w-96">
-              <Auth
+              {/* <Auth
                 supabaseClient={supabase}
                 providers={["google"]}
                 socialColors={true}
-              />
+              /> */}
               {/* <Button
                 style={{ marginTop: "30px", width: "100%" }}
                 onClick={handleLogin}
