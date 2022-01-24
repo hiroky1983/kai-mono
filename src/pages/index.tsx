@@ -46,7 +46,7 @@ const Container = (props: Props) => {
       const list = await supabase.from("kai-mono-list").select();
       const listData = list.data as ItemsData[];
 
-      const appItem = listData.filter((item) => item.approve === true);
+      const appItem = listData.filter((item) => item.approve === true && item.shopped === false);
       const waitItem = listData.filter((item) => item.approve === false);
       setApproveItems(appItem);
       setWaitApproveItems(waitItem);
@@ -87,8 +87,6 @@ const Container = (props: Props) => {
     async (i: number) => {
       const newWaitItems = [...waitApproveItems];
       const item = newWaitItems.splice(i, 1);
-
-      console.log(item[0]);
       const updateItem = item.map((update) => {
         return { ...update, approve: true }
       })
@@ -102,9 +100,15 @@ const Container = (props: Props) => {
   );
 
   const onClickShoppedItems = useCallback(
-    (i: number) => {
+    async (i: number) => {
       const newItems = [...approveItems];
-      newItems.splice(i, 1);
+      const item = newItems.splice(i, 1);
+      console.log(item);
+      const updateItem = item.map((update) => {
+        return { ...update, shopped: true }
+      })
+
+      await supabase.from("kai-mono-list").update({ shopped: updateItem[0].shopped }).eq("id", updateItem[0].id)
       setApproveItems(newItems);
     },
     [approveItems]
@@ -113,16 +117,9 @@ const Container = (props: Props) => {
   const onClickDeleteItems = useCallback(
     async (i: number) => {
       const newItems = [...waitApproveItems];
-      const list = await supabase.from("kai-mono-list").select();
-      const listData = list.data;
-      const resultData = listData.find((data) => {
-        console.log(data.name);
-        const item = newItems.splice(i, 1);
-        return data.name === item[0];
-      });
+      const item = newItems.splice(i, 1);
 
-      console.log(resultData);
-      await supabase.from("kai-mono-list").delete().match(resultData);
+      await supabase.from("kai-mono-list").delete().eq("id", item[0].id);
       setWaitApproveItems(newItems);
     },
     [waitApproveItems]
@@ -142,14 +139,14 @@ const Container = (props: Props) => {
             <WaitList
               items={waitApproveItems}
               onClickAddItems={(i) => onClickAddItems(i)}
-              onClickDeleteItems={onClickDeleteItems}
+              onClickDeleteItems={(i) => onClickDeleteItems(i)}
             />
           </div>
           <div className="h-60">
             <h2 className="text-xl">買い物リスト</h2>
             <List
               items={approveItems}
-              onClickShoppedItems={onClickShoppedItems}
+              onClickShoppedItems={(i) => onClickShoppedItems(i)}
             />
           </div>
         </div>

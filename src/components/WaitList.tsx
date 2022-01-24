@@ -4,7 +4,7 @@ import { ItemsData } from "../pages";
 type Props = {
   items: ItemsData[];
   onClickAddItems: (i: number) => void;
-  onClickDeleteItems: () => void;
+  onClickDeleteItems: (i: number) => void;
 };
 
 export const WaitList: VFC<Props> = (props) => {
@@ -27,7 +27,7 @@ export const WaitList: VFC<Props> = (props) => {
                   OK
                 </button>
                 <button
-                  onClick={() => onClickDeleteItems()}
+                  onClick={() => onClickDeleteItems(i)}
                   className="inline-block px-3 py-1 bg-green-400 text-white rounded-lg"
                 >
                   要らない
