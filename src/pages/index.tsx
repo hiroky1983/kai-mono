@@ -51,6 +51,7 @@ const Container = (props: Props) => {
       setApproveItems(appItem);
       setWaitApproveItems(waitItem);
 
+      //todo maxidの取得方法
       listData.forEach((i) => {
         if (!i) {
           setMaxId(0);
@@ -103,7 +104,6 @@ const Container = (props: Props) => {
     async (i: number) => {
       const newItems = [...approveItems];
       const item = newItems.splice(i, 1);
-      console.log(item);
       const updateItem = item.map((update) => {
         return { ...update, shopped: true }
       })
@@ -124,6 +124,8 @@ const Container = (props: Props) => {
     },
     [waitApproveItems]
   );
+  console.log(maxId);
+
 
   if (user) {
     return (
