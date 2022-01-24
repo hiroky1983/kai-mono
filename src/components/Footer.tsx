@@ -9,7 +9,8 @@ export const Footer: VFC = () => {
   return (
     <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center gap-1">
       <Button
-        size="medium"
+        style={{ height: "36px" }}
+        size="tiny"
         icon={<IconLogOut />}
         onClick={() => supabase.auth.signOut()}
       >
