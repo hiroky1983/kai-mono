@@ -86,9 +86,14 @@ const Container = (props: Props) => {
   const onClickAddItems = useCallback(
     async (i: number) => {
       const newWaitItems = [...waitApproveItems];
-      newWaitItems.splice(i, 1);
+      const item = newWaitItems.splice(i, 1);
 
-      await supabase.from("kai-mono-list")
+      console.log(item[0]);
+      const updateItem = item.map((update) => {
+        return { ...update, approve: true }
+      })
+
+      await supabase.from("kai-mono-list").update({ approve: updateItem[0].approve }).eq("id", updateItem[0].id)
       const newItems = [...approveItems, waitApproveItems[i]];
       setWaitApproveItems(newWaitItems);
       setApproveItems(newItems);
