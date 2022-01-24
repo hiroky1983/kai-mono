@@ -14,7 +14,7 @@ export const List: VFC<Props> = (props) => {
         {items && items.map((item, i) => {
           return (
             <div
-              className="flex my-1 items-center justify-between gap-2"
+              className="flex my-2 items-center justify-between gap-2"
               key={item.id}
             >
               <li className="flex-grow">{item.itemName}</li>

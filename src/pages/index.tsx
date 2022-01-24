@@ -136,8 +136,8 @@ const Container = (props: Props) => {
           onClickAddWaitItems={onClickAddWaitItems}
         />
         <div>
-          <div className="mt-2 h-60">
-            <h2 className="text-xl">承認待ちのアイテム</h2>
+          <div className="mt-4 h-60">
+            <h2 className="text-xl underline">承認待ちのアイテム</h2>
             <WaitList
               items={waitApproveItems}
               onClickAddItems={(i) => onClickAddItems(i)}
@@ -145,7 +145,7 @@ const Container = (props: Props) => {
             />
           </div>
           <div className="h-60">
-            <h2 className="text-xl">買い物リスト</h2>
+            <h2 className="text-xl underline">買い物リスト</h2>
             <List
               items={approveItems}
               onClickShoppedItems={(i) => onClickShoppedItems(i)}
