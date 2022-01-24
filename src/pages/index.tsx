@@ -46,7 +46,9 @@ const Container = (props: Props) => {
       const list = await supabase.from("kai-mono-list").select();
       const listData = list.data as ItemsData[];
 
-      const appItem = listData.filter((item) => item.approve === true && item.shopped === false);
+      const appItem = listData.filter(
+        (item) => item.approve === true && item.shopped === false
+      );
       const waitItem = listData.filter((item) => item.approve === false);
       setApproveItems(appItem);
       setWaitApproveItems(waitItem);
@@ -82,6 +84,7 @@ const Container = (props: Props) => {
     setWaitApproveItems(newItems);
     await supabase.from("kai-mono-list").insert(updateData);
     setInputText("");
+    setMaxId(maxId + 1);
   }, [inputText, waitApproveItems]);
 
   const onClickAddItems = useCallback(
@@ -89,10 +92,13 @@ const Container = (props: Props) => {
       const newWaitItems = [...waitApproveItems];
       const item = newWaitItems.splice(i, 1);
       const updateItem = item.map((update) => {
-        return { ...update, approve: true }
-      })
+        return { ...update, approve: true };
+      });
 
-      await supabase.from("kai-mono-list").update({ approve: updateItem[0].approve }).eq("id", updateItem[0].id)
+      await supabase
+        .from("kai-mono-list")
+        .update({ approve: updateItem[0].approve })
+        .eq("id", updateItem[0].id);
       const newItems = [...approveItems, waitApproveItems[i]];
       setWaitApproveItems(newWaitItems);
       setApproveItems(newItems);
@@ -105,10 +111,13 @@ const Container = (props: Props) => {
       const newItems = [...approveItems];
       const item = newItems.splice(i, 1);
       const updateItem = item.map((update) => {
-        return { ...update, shopped: true }
-      })
+        return { ...update, shopped: true };
+      });
 
-      await supabase.from("kai-mono-list").update({ shopped: updateItem[0].shopped }).eq("id", updateItem[0].id)
+      await supabase
+        .from("kai-mono-list")
+        .update({ shopped: updateItem[0].shopped })
+        .eq("id", updateItem[0].id);
       setApproveItems(newItems);
     },
     [approveItems]
@@ -125,7 +134,6 @@ const Container = (props: Props) => {
     [waitApproveItems]
   );
   console.log(maxId);
-
 
   if (user) {
     return (
