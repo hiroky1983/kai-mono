@@ -144,6 +144,7 @@ const Container = (props: Props) => {
           <div className="mt-4 h-60">
             <h2 className="text-xl underline">承認待ちのアイテム</h2>
             <WaitList
+              user={user}
               items={waitApproveItems}
               onClickAddItems={(i) => onClickAddItems(i)}
               onClickDeleteItems={(i) => onClickDeleteItems(i)}
