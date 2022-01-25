@@ -45,7 +45,6 @@ const Container = (props: Props) => {
     try {
       const list = await supabase.from("kai-mono-list").select();
       const listData = list.data as ItemsData[];
-
       const appItem = listData.filter(
         (item) => item.approve === true && item.shopped === false
       );
