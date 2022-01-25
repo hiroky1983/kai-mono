@@ -23,6 +23,12 @@ const History: NextPage = () => {
         return filterData
     }
 
+    const reverseItem = (i: number) => {
+        const reItem = newData().slice(i, 1);
+        return { ...reItem, approve: false, shopped: false }
+    }
+
+
     return (
         <Layout>
             <div className="mt-4">
@@ -39,10 +45,10 @@ const History: NextPage = () => {
 
                                 </li>
                                 <button
-                                    onClick={() => (i)}
+                                    onClick={() => reverseItem(i)}
                                     className="inline-block px-3 py-1 bg-green-400 text-white rounded-lg"
                                 >
-                                    リストに戻す
+                                    再購入
                                 </button>
                             </div>
                         )
