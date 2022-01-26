@@ -1,10 +1,13 @@
 import React, { useEffect, useState, VFC } from "react";
-import { Toggle } from "@supabase/ui";
+import { Auth, Toggle } from "@supabase/ui";
 
 import Link from "next/link";
 import Image from "next/image";
+import { supabase } from "../libs/supabase";
 
 export const Header: VFC = () => {
+  const user = supabase.auth.user()
+
   const [isDarkMode, setIsDarkMode] = useState(false);
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 

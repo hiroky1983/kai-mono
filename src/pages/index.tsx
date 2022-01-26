@@ -28,14 +28,22 @@ export type ItemsData = {
   created_at: Date;
 };
 
+export type UserState = {
+  id: string;
+  pairUser: string;
+  isDarkMode: boolean;
+}
+
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
   const [waitApproveItems, setWaitApproveItems] = useState<ItemsData[]>();
   const [approveItems, setApproveItems] = useState<ItemsData[]>();
   const [maxId, setMaxId] = useState(0);
-  const { user } = Auth.useUser();
   const router = useRouter();
+  const { user } = Auth.useUser();
   const { id } = router.query;
+  console.log();
+
 
   useEffect(() => {
     getData();
@@ -175,6 +183,7 @@ const Home: NextPage = () => {
                 supabaseClient={supabase}
                 providers={["google"]}
                 socialColors={true}
+                magicLink
               />
               {/* <Button
                 style={{ marginTop: "30px", width: "100%" }}
