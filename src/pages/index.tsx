@@ -32,7 +32,7 @@ export type UserState = {
   id: string;
   pairUser: string;
   isDarkMode: boolean;
-}
+};
 
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
@@ -42,8 +42,7 @@ const Container = (props: Props) => {
   const router = useRouter();
   const { user } = Auth.useUser();
   const { id } = router.query;
-  console.log();
-
+  console.log(user);
 
   useEffect(() => {
     getData();
@@ -183,7 +182,6 @@ const Home: NextPage = () => {
                 supabaseClient={supabase}
                 providers={["google"]}
                 socialColors={true}
-                magicLink
               />
               {/* <Button
                 style={{ marginTop: "30px", width: "100%" }}
