@@ -16,7 +16,7 @@ export const Footer: VFC = () => {
             onClick={() => router.push("/history")}
             icon={<IconClipboard />}
           >
-            <Typography.Text>Copy</Typography.Text>
+            <Typography.Text>過去の買い物リスト</Typography.Text>
           </Dropdown.Item>,
           <Dropdown.Item icon={<IconMail />}>
             <Typography.Text>Duplicate</Typography.Text>
