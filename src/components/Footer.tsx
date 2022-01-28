@@ -9,7 +9,10 @@ const THIS_YEAR = new Date().getFullYear();
 export const Footer: VFC = () => {
   const router = useRouter();
   return (
-    <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center gap-4">
+    <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-12">
+      <small lang="en" className="ml-2">
+        &copy; {THIS_YEAR} hirocky1983 All Rights Reserved.
+      </small>
       <Dropdown
         overlay={[
           <Dropdown.Item
@@ -33,12 +36,8 @@ export const Footer: VFC = () => {
           </Dropdown.Item>
         ]}
       >
-        <Button block><IconUsers /></Button>
+        <Button block size="medium"><IconUsers /></Button>
       </Dropdown>
-
-      <small lang="en">
-        &copy; {THIS_YEAR} hirocky1983 All Rights Reserved.
-      </small>
     </footer>
   );
 };
