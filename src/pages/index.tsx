@@ -42,7 +42,6 @@ const Container = (props: Props) => {
   const router = useRouter();
   const { user } = Auth.useUser();
   const { id } = router.query;
-  console.log(user);
 
   useEffect(() => {
     getData();
@@ -183,12 +182,16 @@ const Home: NextPage = () => {
                 providers={["google"]}
                 socialColors={true}
               />
-              {/* <Button
+              <Button
                 style={{ marginTop: "30px", width: "100%" }}
-                onClick={handleLogin}
+                onClick={() => {
+                  console.log("===押せた===");
+
+                  handleLogin
+                }}
               >
                 テストログイン
-              </Button> */}
+              </Button>
             </div>
           </div>
         </Container>

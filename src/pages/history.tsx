@@ -21,13 +21,10 @@ const History: NextPage = () => {
 
     const reverseItem = async (i: number) => {
         const clickData = data[i]
-        console.log({ ...clickData, approve: false, shopped: false });
-
         await supabase.from("kai-mono-list").update({ ...clickData, approve: false, shopped: false }).eq("id", clickData.id)
-
         const reItem = data.slice(i, 1);
         mutate("historyData", reItem)
-        return [...reItem,];
+        return [...reItem];
     };
 
     return (
@@ -45,7 +42,6 @@ const History: NextPage = () => {
                                 <button
                                     onClick={() => {
                                         reverseItem(i);
-                                        // mutate("historyData", data, false);
                                     }}
                                     className="inline-block px-3 py-1 bg-green-400 text-white rounded-lg"
                                 >

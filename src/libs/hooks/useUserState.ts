@@ -1,6 +1,5 @@
-import { User } from "@supabase/supabase-js";
 import useSWR from "swr";
-import { ItemsData, UserState } from "../../pages";
+import { UserState } from "../../pages";
 import { supabase } from "../supabase";
 
 const fetcheData = async (): Promise<UserState[]> => {
