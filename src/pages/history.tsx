@@ -1,4 +1,5 @@
 import { NextPage } from "next";
+import { useRouter } from "next/dist/client/router";
 import useSWR, { useSWRConfig } from "swr";
 import { ItemsData } from ".";
 import { Layout } from "../components/Layout";
@@ -15,7 +16,10 @@ const fecther = async (): Promise<ItemsData[]> => {
 const History: NextPage = () => {
     const { data, error } = useSWR("historyData", fecther);
     const { mutate } = useSWRConfig();
+    const router = useRouter();
+    const user = supabase.auth.user();
 
+    if (!user) router.replace("/");
     if (!data) return <p>データがありません</p>;
     if (error) return <p>データの取得に失敗しました。</p>;
 
