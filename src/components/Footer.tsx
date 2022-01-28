@@ -1,5 +1,5 @@
-import React, { VFC } from "react";
-import { Button, Divider, Dropdown, IconClipboard, IconLogOut, IconMail, IconUsers, Typography } from "@supabase/ui";
+import React, { useEffect, useState, VFC } from "react";
+import { Button, Divider, Dropdown, IconClipboard, IconLogOut, IconMail, IconSettings, IconUsers, Typography } from "@supabase/ui";
 
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
@@ -8,6 +8,8 @@ const THIS_YEAR = new Date().getFullYear();
 
 export const Footer: VFC = () => {
   const router = useRouter();
+  const user = supabase.auth.user();
+
   return (
     <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-12">
       <small lang="en" className="ml-2">
@@ -22,7 +24,7 @@ export const Footer: VFC = () => {
             <Typography.Text>過去の買い物リスト</Typography.Text>
           </Dropdown.Item>,
           <Dropdown.Item icon={<IconMail />}>
-            <Typography.Text>Duplicate</Typography.Text>
+            <Typography.Text>招待する</Typography.Text>
           </Dropdown.Item>,
           <Divider light />,
           <Dropdown.Item
@@ -32,12 +34,13 @@ export const Footer: VFC = () => {
               router.replace("/");
             }}
           >
-            Sign out
+            ログアウト
           </Dropdown.Item>
         ]}
       >
-        <Button block size="medium"><IconUsers /></Button>
+        <Button block size="medium"><IconSettings /></Button>
       </Dropdown>
+
     </footer>
   );
 };
