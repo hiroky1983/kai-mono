@@ -24,7 +24,10 @@ export const Footer: VFC = () => {
           <Divider light />,
           <Dropdown.Item
             icon={<IconLogOut />}
-            onClick={() => supabase.auth.signOut()}
+            onClick={() => {
+              supabase.auth.signOut();
+              router.replace("/");
+            }}
           >
             Sign out
           </Dropdown.Item>
