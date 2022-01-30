@@ -20,8 +20,8 @@ const History: NextPage = () => {
     const user = supabase.auth.user();
 
     if (!user) router.replace("/");
-    if (!data) return <p>データがありません</p>;
-    if (error) return <p>データの取得に失敗しました。</p>;
+    if (!data) return <p className="text-center">データがありません</p>;
+    if (error) return <p className="text-center">データの取得に失敗しました。</p>;
 
     const reverseItem = async (i: number) => {
         const clickData = data[i]
