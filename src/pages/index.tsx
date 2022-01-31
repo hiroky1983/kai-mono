@@ -14,6 +14,7 @@ import { handleLogin, supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
 import { useRouter } from "next/dist/client/router";
+import { Session, User } from "@supabase/supabase-js";
 
 type Props = {
   children: ReactNode;
@@ -39,17 +40,44 @@ const Container = (props: Props) => {
   const [waitApproveItems, setWaitApproveItems] = useState<ItemsData[]>();
   const [approveItems, setApproveItems] = useState<ItemsData[]>();
   const [maxId, setMaxId] = useState(0);
+  const [session, setSession] = useState<User>(null)
   const router = useRouter();
   const { user } = Auth.useUser();
   const { id } = router.query;
 
   useEffect(() => {
+    supabase.auth.onAuthStateChange(async (e, session) => {
+      if (e == "SIGNED_IN") {
+        setSession(session.user)
+      }
+    })
     getData();
   }, [user, setWaitApproveItems]);
 
   const getData = async () => {
     try {
+      const userMetaData = user.user_metadata;
+      const avatarUrl = userMetaData.avatar_url;
+      const fullName = userMetaData.full_name;
+      const userData = await supabase.from("user").select();
       const list = await supabase.from("kai-mono-list").select();
+
+      if (session) {
+        const findData = userData.data.findIndex((data) => {
+          return data.user_id === session.id;
+        })
+        if (findData === -1 && session) {
+          try {
+            //Todo ユニークなIDの発行が必要
+            const initialUser = { id: 123456789, user_id: session.id, pairUser: "", isDarkMode: false, user_name: fullName, avatar_url: avatarUrl }
+            console.log(initialUser);
+            await supabase.from("user").insert(initialUser)
+          } catch (error) {
+            console.log(error);
+
+          }
+        }
+      }
       const listData = list.data as ItemsData[];
       const appItem = listData.filter(
         (item) => item.approve === true && item.shopped === false
@@ -69,6 +97,7 @@ const Container = (props: Props) => {
       console.log(error);
     }
   };
+
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
@@ -186,7 +215,6 @@ const Home: NextPage = () => {
                 style={{ marginTop: "30px", width: "100%" }}
                 onClick={() => {
                   console.log("===押せた===");
-
                   handleLogin
                 }}
               >
