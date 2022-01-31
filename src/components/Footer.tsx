@@ -29,19 +29,25 @@ export const Footer: VFC = () => {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  console.log(visible);
+
 
   const onChangeEmail: InputHTMLAttributes<HTMLInputElement>["onChange"] =
     useCallback((e) => setEmail(e.target.value), [email]);
 
-  const toggle = () => {
+  const toggle = async () => {
     setVisible(!visible);
+    await supabase.from("user").update({ isDarkMode: visible })
   };
 
   const initdata = async () => {
-    const userData = await supabase.from("user").select("isDarkMode");
-    const data = userData.data[0];
-    console.log(data);
-
+    if (user) {
+      const userData = await supabase.from("user").select();
+      const data = userData.data.find((d) => {
+        return d.user_id === user.id
+      })
+      setVisible(data.isDarkMode)
+    }
   }
 
   useEffect(() => {
