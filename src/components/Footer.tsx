@@ -37,6 +37,17 @@ export const Footer: VFC = () => {
     setVisible(!visible);
   };
 
+  const initdata = async () => {
+    const userData = await supabase.from("user").select("isDarkMode");
+    const data = userData.data[0];
+    console.log(data);
+
+  }
+
+  useEffect(() => {
+    initdata()
+  }, [])
+
   return (
     <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-12">
       <small lang="en" className="ml-2">
