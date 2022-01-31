@@ -62,7 +62,7 @@ export const Footer: VFC = () => {
             }}
           >
             ログアウト
-          </Dropdown.Item>,
+          </Dropdown.Item>
         ]}
       >
         <Button block size="medium">
@@ -77,11 +77,15 @@ export const Footer: VFC = () => {
         description="招待メールを送ると、招待された人はこのアプリを使用することができます。"
         visible={visible}
         onCancel={toggle}
-        onConfirm={async () => {
-          setLoading(true);
-          await supabase.auth.api.inviteUserByEmail(email);
-          setLoading(false);
-          toggle();
+        onConfirm={async (e: MouseEvent) => {
+          if (email === "") {
+            e.preventDefault();
+          } else {
+            setLoading(true);
+            await supabase.auth.api.inviteUserByEmail(email);
+            setLoading(false);
+            toggle();
+          }
         }}
         contentStyle={{ width: "400px" }}
         loading={loading}

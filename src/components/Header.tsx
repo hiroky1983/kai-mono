@@ -33,7 +33,7 @@ export const Header: VFC = () => {
       </Link>
       <Link href="/">
         <a className="text-4xl text-center">
-          <h1>kai-mono</h1>
+          <h1 className="font-PottaOne">kai-mono</h1>
         </a>
       </Link>
       <Toggle className="mr-4" onChange={toggleDarkMode} />

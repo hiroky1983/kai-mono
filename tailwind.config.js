@@ -6,7 +6,11 @@ module.exports = {
   ],
   darkMode: "class", // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        PottaOne: ['Potta One']
+      },
+    },
   },
   variants: {
     extend: {},
