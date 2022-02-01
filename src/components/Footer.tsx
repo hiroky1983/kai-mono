@@ -103,8 +103,10 @@ export const Footer: VFC = () => {
             e.preventDefault();
           } else {
             setLoading(true);
-            await supabase.auth.api.inviteUserByEmail(email);
+            const { data, error } = await supabase.auth.api.inviteUserByEmail(email);
             setLoading(false);
+            console.log(data, error);
+
             toggle();
           }
         }}
