@@ -19,7 +19,7 @@ const History: NextPage = () => {
   const router = useRouter();
   const user = supabase.auth.user();
 
-  if (!user) router.replace("/");
+  if (!user && data) router.replace("/");
   if (!data) return <p className="text-center">データがありません</p>;
   if (error) return <p className="text-center">データの取得に失敗しました。</p>;
 
