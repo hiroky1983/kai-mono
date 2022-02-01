@@ -12,12 +12,28 @@ export const Header: VFC = () => {
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
+    const themeMode = async () => {
+      if (isDarkMode) {
+        document.body.classList.add("dark");
+        await supabase.from("user").update({ isDarkMode: isDarkMode })
+      } else {
+        document.body.classList.remove("dark");
+        await supabase.from("user").update({ isDarkMode: isDarkMode })
+      }
     }
+    initdata()
+    themeMode();
   }, [isDarkMode]);
+
+  const initdata = async () => {
+    if (user) {
+      const userData = await supabase.from("user").select();
+      const data = userData.data.find((d) => {
+        return d.user_id === user.id
+      })
+      setIsDarkMode(data.isDarkMode)
+    }
+  }
 
   return (
     <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center">
