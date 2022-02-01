@@ -1,15 +1,22 @@
-import React, { useEffect, useState, VFC } from "react";
-import { Auth, Toggle } from "@supabase/ui";
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState, VFC } from "react";
+import { Toggle } from "@supabase/ui";
 
 import Link from "next/link";
 import Image from "next/image";
 import { supabase } from "../libs/supabase";
+import { Theme } from "../pages/_app";
+
+export type theme = {
+  isDarkMode: boolean,
+  setIsDarkMode: Dispatch<SetStateAction<boolean>>
+  toggleDarkMode: () => void
+}
 
 export const Header: VFC = () => {
   const user = supabase.auth.user()
+  const { isDarkMode, setIsDarkMode, toggleDarkMode } = useContext<theme>(Theme);
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+
 
   useEffect(() => {
     const themeMode = async () => {
@@ -21,19 +28,11 @@ export const Header: VFC = () => {
         await supabase.from("user").update({ isDarkMode: isDarkMode })
       }
     }
-    initdata()
+    // initdata()
     themeMode();
   }, [isDarkMode]);
 
-  const initdata = async () => {
-    if (user) {
-      const userData = await supabase.from("user").select();
-      const data = userData.data.find((d) => {
-        return d.user_id === user.id
-      })
-      setIsDarkMode(data.isDarkMode)
-    }
-  }
+
 
   return (
     <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center">
