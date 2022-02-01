@@ -17,20 +17,34 @@ import {
   Modal,
   Typography,
 } from "@supabase/ui";
-
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
+import Image from "next/image";
+
 
 const THIS_YEAR = new Date().getFullYear();
 
 export const Footer: VFC = () => {
   const router = useRouter();
-  const user = supabase.auth.user();
+
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
-  console.log(visible);
+  const [userName, setUserName] = useState("");
 
+  const userData = async () => {
+    const user = await supabase.from("user").select();
+    const data = user.data;
+    const authUser = supabase.auth.user();
+    const returnData = data.find((d) => {
+      return d.user_id === authUser.id;
+    })
+    setUserName(returnData.user_name);
+  }
+
+  useEffect(() => {
+    userData();
+  }, [])
 
   const onChangeEmail: InputHTMLAttributes<HTMLInputElement>["onChange"] =
     useCallback((e) => setEmail(e.target.value), [email]);
@@ -47,6 +61,10 @@ export const Footer: VFC = () => {
       </small>
       <Dropdown
         overlay={[
+          <Dropdown.Item>
+            <Typography.Text>{userName}</Typography.Text>
+          </Dropdown.Item>,
+          <Divider light />,
           <Dropdown.Item
             onClick={() => router.push("/history")}
             icon={<IconClipboard />}

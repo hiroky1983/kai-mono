@@ -10,11 +10,11 @@ import {
 import React from "react";
 import { Layout } from "../components/Layout";
 import { List } from "../components/List";
-import { handleLogin, supabase } from "../libs/supabase";
+import { supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
 import { useRouter } from "next/dist/client/router";
-import { Session, User } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 
 type Props = {
   children: ReactNode;
@@ -40,7 +40,7 @@ const Container = (props: Props) => {
   const [waitApproveItems, setWaitApproveItems] = useState<ItemsData[]>();
   const [approveItems, setApproveItems] = useState<ItemsData[]>();
   const [maxId, setMaxId] = useState(0);
-  const [session, setSession] = useState<User>(null)
+  const [session, setSession] = useState<User>(null);
   const router = useRouter();
   const { user } = Auth.useUser();
   const { id } = router.query;
@@ -71,7 +71,7 @@ const Container = (props: Props) => {
             //Todo ユニークなIDの発行が必要
             const initialUser = { id: 123456789, user_id: session.id, pairUser: "", isDarkMode: false, user_name: fullName, avatar_url: avatarUrl }
             console.log(initialUser);
-            await supabase.from("user").insert(initialUser)
+            await supabase.from("user").insert(initialUser);
           } catch (error) {
             console.log(error);
 
@@ -86,18 +86,18 @@ const Container = (props: Props) => {
       setApproveItems(appItem);
       setWaitApproveItems(waitItem);
 
-      listData.forEach((i) => {
+      const maxNum = Math.max(...listData.map((i) => {
         if (!i) {
-          setMaxId(0);
+          return 0;
         } else {
-          setMaxId(Math.max(i.id));
+          return i.id
         }
-      });
+      }));
+      setMaxId(maxNum)
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
@@ -213,10 +213,18 @@ const Home: NextPage = () => {
               />
               <Button
                 style={{ marginTop: "30px", width: "100%" }}
-                onClick={() => {
-                  console.log("===押せた===");
-                  handleLogin
-                }}
+                onClick={async () => {
+                  try {
+                    const { user, error } = await supabase.auth.signIn({
+                      email: "hirockysun@gmail.com",
+                      password: "sa198308",
+                    });
+                    console.log(user, error);
+                  } catch (error) {
+                    console.error(error);
+                  }
+                }
+                }
               >
                 テストログイン
               </Button>
@@ -224,7 +232,7 @@ const Home: NextPage = () => {
           </div>
         </Container>
       </Auth.UserContextProvider>
-    </Layout>
+    </Layout >
   );
 };
 
