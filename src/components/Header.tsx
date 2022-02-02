@@ -16,8 +16,6 @@ export const Header: VFC = () => {
   const user = supabase.auth.user()
   const { isDarkMode, setIsDarkMode, toggleDarkMode } = useContext<theme>(Theme);
 
-
-
   useEffect(() => {
     const themeMode = async () => {
       if (isDarkMode) {
@@ -28,11 +26,8 @@ export const Header: VFC = () => {
         await supabase.from("user").update({ isDarkMode: isDarkMode })
       }
     }
-    // initdata()
     themeMode();
   }, [isDarkMode]);
-
-
 
   return (
     <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center">
