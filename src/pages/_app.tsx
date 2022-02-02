@@ -16,8 +16,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
   const initdata = async () => {
     if (user) {
-      const userData = await supabase.from("user").select();
-      const data = userData.data.find((d) => {
+      const { data: userData, error } = await supabase.from("user").select("user_id");
+      const data = userData.find((d) => {
         return d.user_id === user.id
       })
       setIsDarkMode(data.isDarkMode)
