@@ -74,7 +74,6 @@ const Container = (props: Props) => {
             await supabase.from("user").insert(initialUser);
           } catch (error) {
             console.log(error);
-
           }
         }
       }
@@ -160,7 +159,6 @@ const Container = (props: Props) => {
     async (i: number) => {
       const newItems = [...waitApproveItems];
       const item = newItems.splice(i, 1);
-
       await supabase.from("kai-mono-list").delete().eq("id", item[0].id);
       setWaitApproveItems(newItems);
     },
