@@ -204,15 +204,16 @@ const Home: NextPage = () => {
     <Layout>
       <Auth.UserContextProvider supabaseClient={supabase}>
         <Container>
-          <div className="pt-8">
+          <div className="pt-8 mx-4">
             <div className="w-full sm:w-96">
               <Auth
                 supabaseClient={supabase}
                 providers={["google"]}
                 socialColors={true}
+                onlyThirdPartyProviders
               />
               <Button
-                style={{ marginTop: "30px", width: "100%" }}
+                style={{ marginTop: "30px", maxWidth: "400px", backgroundColor: "#65D8A5" }}
                 onClick={async () => {
                   try {
                     const { user, error } = await supabase.auth.signIn({
