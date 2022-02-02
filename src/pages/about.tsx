@@ -12,7 +12,7 @@ const About: NextPage = () => {
             </div>
             <h2 className="text-center py-6 font-bold text-2xl">このアプリでできること</h2>
             <div className="flex justify-center my-4 text-center">
-                <div className="grid gap-4">
+                <div className="grid gap-4 md:flex">
                     <div className="w-80 shadow-lg p-6 rounded-lg dark:bg-gray-500">
                         <div className="flex justify-center">
                             <Image src="/Shopping-bro .png" width="120px" height="240px" />
