@@ -36,10 +36,12 @@ export const Footer: VFC = () => {
     const user = await supabase.from("user").select();
     const data = user.data;
     const authUser = supabase.auth.user();
-    const returnData = data.find((d) => {
-      return d.user_id === authUser.id;
-    })
-    setUserName(returnData.user_name);
+    if (authUser) {
+      const returnData = data.find((d) => {
+        return d.user_id === authUser.id;
+      })
+      setUserName(returnData.user_name);
+    }
   }
 
   useEffect(() => {
