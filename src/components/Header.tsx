@@ -36,8 +36,8 @@ export const Header: VFC = () => {
           <Image
             src="/kai-mono__1_-removebg-preview.png"
             alt="logo"
-            width={90}
-            height={90}
+            width={80}
+            height={80}
           />
         </a>
       </Link>
