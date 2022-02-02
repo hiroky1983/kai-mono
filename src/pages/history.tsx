@@ -36,7 +36,7 @@ const History: NextPage = () => {
 
   return (
     <Layout>
-      <div className="mt-4">
+      <div className="mt-4 mx-4">
         <h2 className="text-xl underline">過去のリスト</h2>
         <ul>
           {data.map((d, i) => {
@@ -50,7 +50,7 @@ const History: NextPage = () => {
                   onClick={() => {
                     reverseItem(i);
                   }}
-                  className="inline-block px-3 py-1 bg-green-400 text-white rounded-lg"
+                  className="inline-block px-3 py-1 bg-primary text-white rounded-lg"
                 >
                   再購入
                 </button>

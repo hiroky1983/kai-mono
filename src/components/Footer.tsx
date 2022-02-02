@@ -88,7 +88,7 @@ export const Footer: VFC = () => {
           </Dropdown.Item>
         ]}
       >
-        <Button block size="medium">
+        <Button block size="medium" style={{ backgroundColor: "#65D8A5" }}>
           <IconSettings />
         </Button>
       </Dropdown>

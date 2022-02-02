@@ -169,7 +169,7 @@ const Container = (props: Props) => {
 
   if (user) {
     return (
-      <div>
+      <div className="mx-4">
         <InputArea
           inputText={inputText}
           handleChange={handleChange}

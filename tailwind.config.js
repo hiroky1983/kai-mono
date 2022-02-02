@@ -10,6 +10,9 @@ module.exports = {
       fontFamily: {
         PottaOne: ['Potta One']
       },
+      colors: {
+        primary: "#65D8A5",
+      },
     },
   },
   variants: {
