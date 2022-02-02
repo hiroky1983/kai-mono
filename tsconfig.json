@@ -17,12 +17,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@svg*": [
-        "src/svg*"
-      ]
-    }
   },
   "include": [
     "next-env.d.ts",
