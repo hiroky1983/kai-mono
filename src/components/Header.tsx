@@ -51,7 +51,7 @@ export const Header: VFC = () => {
           <h1 className="font-PottaOne">kai-mono</h1>
         </a>
       </Link>
-      <Toggle className="mr-4" onChange={toggleDarkMode} />
+      <Toggle className="mr-4" onChange={toggleDarkMode} checked={isDarkMode} />
     </header>
   );
 };
