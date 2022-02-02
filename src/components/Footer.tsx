@@ -21,7 +21,6 @@ import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
 import Image from "next/image";
 
-
 const THIS_YEAR = new Date().getFullYear();
 
 export const Footer: VFC = () => {
@@ -39,21 +38,21 @@ export const Footer: VFC = () => {
     if (authUser) {
       const returnData = data.find((d) => {
         return d.user_id === authUser.id;
-      })
+      });
       setUserName(returnData.user_name);
     }
-  }
+  };
 
   useEffect(() => {
     userData();
-  }, [])
+  }, []);
 
   const onChangeEmail: InputHTMLAttributes<HTMLInputElement>["onChange"] =
     useCallback((e) => setEmail(e.target.value), [email]);
 
   const toggle = async () => {
     setVisible(!visible);
-    await supabase.from("user").update({ isDarkMode: visible })
+    await supabase.from("user").update({ isDarkMode: visible });
   };
 
   return (
@@ -62,6 +61,7 @@ export const Footer: VFC = () => {
         &copy; {THIS_YEAR} hirocky1983 All Rights Reserved.
       </small>
       <Dropdown
+        style={{ display: "grid", gap: "12px", padding: "6px 0px" }}
         overlay={[
           <Dropdown.Item>
             <Typography.Text>{userName}</Typography.Text>
@@ -85,7 +85,7 @@ export const Footer: VFC = () => {
             }}
           >
             ログアウト
-          </Dropdown.Item>
+          </Dropdown.Item>,
         ]}
       >
         <Button block size="medium" style={{ backgroundColor: "#65D8A5" }}>
@@ -105,7 +105,9 @@ export const Footer: VFC = () => {
             e.preventDefault();
           } else {
             setLoading(true);
-            const { data, error } = await supabase.auth.api.inviteUserByEmail(email);
+            const { data, error } = await supabase.auth.api.inviteUserByEmail(
+              email
+            );
             setLoading(false);
             console.log(data, error);
 
