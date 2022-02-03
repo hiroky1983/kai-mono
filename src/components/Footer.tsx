@@ -25,7 +25,7 @@ const THIS_YEAR = new Date().getFullYear();
 
 export const Footer: VFC = () => {
   const router = useRouter();
-
+  const user = supabase.auth.user();
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -80,11 +80,15 @@ export const Footer: VFC = () => {
           <Dropdown.Item
             icon={<IconLogOut />}
             onClick={() => {
-              supabase.auth.signOut();
-              router.replace("/");
+              if (user) {
+                supabase.auth.signOut();
+                router.replace("/");
+              } else {
+                router.push("/")
+              }
             }}
           >
-            ログアウト
+            {user ? "ログアウト" : "ログイン"}
           </Dropdown.Item>,
         ]}
       >
