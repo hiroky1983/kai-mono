@@ -257,4 +257,9 @@ const Home: NextPage = () => {
   );
 };
 
+export const getStaticPorps = async () => {
+  const { data:itemsData, error: itemsError } = await supabase.from("kai-mono-list").select();
+  const {data: userData, error: userError} = await supabase.from("users").select();
+}
+
 export default Home;
