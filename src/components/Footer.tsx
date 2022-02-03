@@ -80,6 +80,12 @@ export const Footer: VFC = () => {
     }
   }
 
+  const onClickAddPairUser = async () => {
+    alert("追加したよ");
+    setResultName("")
+    toggle();
+  }
+
   return (
     <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-16 sm:h-20">
       <small lang="en" className="ml-2">
@@ -136,7 +142,7 @@ export const Footer: VFC = () => {
           setSearchUserName("");
           toggle();
         }}
-        onConfirm={resultName === "" || resultName === "ユーザーが見つかりませんでした" ? onClickSearchUser : toggle}
+        onConfirm={resultName === "" || resultName === "ユーザーが見つかりませんでした" ? onClickSearchUser : onClickAddPairUser}
         contentStyle={{ width: "380px" }}
         loading={loading}
       >
