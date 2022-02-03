@@ -1,8 +1,11 @@
+import { Button } from "@supabase/ui";
 import { NextPage } from "next";
+import { useRouter } from "next/dist/client/router";
 import Image from "next/image";
 import { Layout } from "../components/Layout";
 
 const About: NextPage = () => {
+  const router = useRouter();
   return (
     <Layout>
       <div className="relative">
@@ -59,7 +62,7 @@ const About: NextPage = () => {
           <h2 className="text-center py-6 font-bold text-2xl">
             PWA対応でスマホアプリのように使える
           </h2>
-          <div className="grid md:grid-cols-2">
+          <div className="grid md:grid-cols-2 gap-10">
             <div className="md:flex items-center">
               <div className="flex justify-center">
                 <Image
@@ -105,6 +108,23 @@ const About: NextPage = () => {
               <p>④スマホアプリと同じ挙動で仕様することが出来ます</p>
             </div>
           </div>
+        </div>
+        <div className="relative mb-8">
+          <h2 className="text-center py-6 font-bold text-2xl">
+            さっそくつかってみよう
+          </h2>
+          <Image
+            className="object-contain"
+            src="/kai-mono__1_-removebg-preview.png"
+            width="180px"
+            height="180px"
+          />
+          <Button
+            style={{ backgroundColor: "#65D8A5", float: "right", position: "absolute", bottom: "30px", right: "20px", padding: "18px" }}
+            onClick={() => router.push("/")}
+          >
+            ログイン
+          </Button>
         </div>
       </div>
     </Layout>
