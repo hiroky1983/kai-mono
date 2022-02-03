@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   console.log(isDarkMode);
 
-  const toggleDarkMode = async () => {
+  const toggleDarkMode = () => {
     console.log("=====================render");
     setIsDarkMode(!isDarkMode);
     // if (isDarkMode) {

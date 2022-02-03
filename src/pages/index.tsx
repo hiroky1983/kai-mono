@@ -1,5 +1,5 @@
 import { Auth, Button } from "@supabase/ui";
-import { NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import {
   ChangeEvent,
   ReactNode,
