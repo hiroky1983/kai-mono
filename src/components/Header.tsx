@@ -20,32 +20,8 @@ export type theme = {
 };
 
 export const Header: VFC = () => {
-  const user = supabase.auth.user();
   const { isDarkMode, setIsDarkMode, toggleDarkMode } =
     useContext<theme>(Theme);
-
-  useEffect(() => {
-    const themeMode = async () => {
-      if (user) {
-        if (isDarkMode) {
-          document.body.classList.add("dark");
-          console.log("========trueだよ==========");
-          await supabase
-            .from("user")
-            .update({ isDarkMode: isDarkMode })
-            .eq("user_id", user.id);
-        } else {
-          document.body.classList.remove("dark");
-          console.log("========falseだよ==========");
-          await supabase
-            .from("user")
-            .update({ isDarkMode: isDarkMode })
-            .eq("user_id", user.id);
-        }
-      }
-    };
-    themeMode();
-  }, [toggleDarkMode]);
 
   return (
     <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center p-4 md:px-12 lg:px-18">
