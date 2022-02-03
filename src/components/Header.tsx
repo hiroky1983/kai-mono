@@ -1,4 +1,11 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState, VFC } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+  VFC,
+} from "react";
 import { Toggle } from "@supabase/ui";
 
 import Link from "next/link";
@@ -7,28 +14,36 @@ import { supabase } from "../libs/supabase";
 import { Theme } from "../pages/_app";
 
 export type theme = {
-  isDarkMode: boolean,
-  setIsDarkMode: Dispatch<SetStateAction<boolean>>
-  toggleDarkMode: () => void
-}
+  isDarkMode: boolean;
+  setIsDarkMode: Dispatch<SetStateAction<boolean>>;
+  toggleDarkMode: () => void;
+};
 
 export const Header: VFC = () => {
-  const user = supabase.auth.user()
-  const { isDarkMode, setIsDarkMode, toggleDarkMode } = useContext<theme>(Theme);
+  const user = supabase.auth.user();
+  const { isDarkMode, setIsDarkMode, toggleDarkMode } =
+    useContext<theme>(Theme);
 
   useEffect(() => {
     const themeMode = async () => {
-      if (isDarkMode) {
-        document.body.classList.add("dark");
-        console.log("========trueだよ==========");
-        console.log(isDarkMode);
-        // await supabase.from("user").update({ isDarkMode: isDarkMode }).eq("user_id", user.id);
-      } else {
-        document.body.classList.remove("dark");
-        console.log("========falseだよ==========");
-        // await supabase.from("user").update({ isDarkMode: isDarkMode }).eq("user_id", user.id);
+      if (user) {
+        if (isDarkMode) {
+          document.body.classList.add("dark");
+          console.log("========trueだよ==========");
+          await supabase
+            .from("user")
+            .update({ isDarkMode: isDarkMode })
+            .eq("user_id", user.id);
+        } else {
+          document.body.classList.remove("dark");
+          console.log("========falseだよ==========");
+          await supabase
+            .from("user")
+            .update({ isDarkMode: isDarkMode })
+            .eq("user_id", user.id);
+        }
       }
-    }
+    };
     themeMode();
   }, [toggleDarkMode]);
 

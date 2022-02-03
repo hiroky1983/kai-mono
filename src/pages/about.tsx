@@ -120,7 +120,14 @@ const About: NextPage = () => {
             height="180px"
           />
           <Button
-            style={{ backgroundColor: "#65D8A5", float: "right", position: "absolute", bottom: "30px", right: "20px", padding: "18px" }}
+            style={{
+              backgroundColor: "#65D8A5",
+              float: "right",
+              position: "absolute",
+              bottom: "30px",
+              right: "20px",
+              padding: "18px",
+            }}
             onClick={() => router.push("/")}
           >
             ログイン
