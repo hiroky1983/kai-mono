@@ -167,7 +167,7 @@ const Container = (props: Props) => {
 
   if (user) {
     return (
-      <div className="mx-4">
+      <div className="mx-4 mt-6">
         <InputArea
           inputText={inputText}
           handleChange={handleChange}
@@ -202,7 +202,7 @@ const Home: NextPage = () => {
     <Layout>
       <Auth.UserContextProvider supabaseClient={supabase}>
         <Container>
-          <div className="pt-8 mx-4">
+          <div>
             <div className="w-full sm:w-96">
               <Auth
                 supabaseClient={supabase}
@@ -222,8 +222,7 @@ const Home: NextPage = () => {
                   } catch (error) {
                     console.error(error);
                   }
-                }
-                }
+                }}
               >
                 テストログイン
               </Button>

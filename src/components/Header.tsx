@@ -30,7 +30,7 @@ export const Header: VFC = () => {
   }, [isDarkMode]);
 
   return (
-    <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center p-2">
+    <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center p-4 md:px-12 lg:px-18">
       <Link href="/">
         <a>
           <Image
@@ -42,7 +42,7 @@ export const Header: VFC = () => {
         </a>
       </Link>
       <Link href="/">
-        <a className="text-4xl text-center">
+        <a className="text-3xl md:text-5xl lg:text-6xl text-center">
           <h1 className="font-PottaOne">kai-mono</h1>
         </a>
       </Link>

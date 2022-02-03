@@ -56,7 +56,7 @@ export const Footer: VFC = () => {
   };
 
   return (
-    <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-12">
+    <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-16 sm:h-20">
       <small lang="en" className="ml-2">
         &copy; {THIS_YEAR} hirocky1983 All Rights Reserved.
       </small>
@@ -92,7 +92,7 @@ export const Footer: VFC = () => {
           </Dropdown.Item>,
         ]}
       >
-        <Button block size="medium" style={{ backgroundColor: "#65D8A5" }}>
+        <Button block size="medium" style={{ backgroundColor: "#65D8A5", padding: "16px" }}>
           <IconSettings />
         </Button>
       </Dropdown>

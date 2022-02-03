@@ -9,17 +9,17 @@ type Props = {
 export const InputArea: VFC<Props> = (porps) => {
   const { handleChange, onClickAddWaitItems, inputText } = porps;
   return (
-    <div className="flex mt-8 h-full">
+    <div className="flex h-full">
       <input
         type="text"
-        className="mr-2 px-2 py-1 w-4/5 rounded-md ring-1 ring-primary dark:text-gray-600"
+        className="mr-2 px-2 py-1 lg:py-2 w-3/5 rounded-md ring-1 ring-primary dark:text-gray-600"
         placeholder="買うものを入力"
         onChange={handleChange}
         value={inputText}
       />
       <button
         onClick={onClickAddWaitItems}
-        className="inline-block px-3 py-1 bg-primary text-white rounded-lg"
+        className="inline-block px-3 lg:px-4 py-1 lg:py-2  bg-primary text-white rounded-lg"
       >
         追加
       </button>

@@ -20,7 +20,7 @@ export const List: VFC<Props> = (props) => {
               <li className="flex-grow">{item.itemName}</li>
               <button
                 onClick={() => onClickShoppedItems(i)}
-                className="inline-block px-3 py-1 bg-primary text-white rounded-lg"
+                className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-primary text-white rounded-lg"
               >
                 買った
               </button>
