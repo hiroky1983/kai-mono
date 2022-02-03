@@ -22,11 +22,11 @@ export const Header: VFC = () => {
         document.body.classList.add("dark");
         console.log("========trueだよ==========");
         console.log(isDarkMode);
-        await supabase.from("user").update({ isDarkMode: isDarkMode }).eq("user_id", user.id);
+        // await supabase.from("user").update({ isDarkMode: isDarkMode }).eq("user_id", user.id);
       } else {
         document.body.classList.remove("dark");
         console.log("========falseだよ==========");
-        await supabase.from("user").update({ isDarkMode: isDarkMode }).eq("user_id", user.id);
+        // await supabase.from("user").update({ isDarkMode: isDarkMode }).eq("user_id", user.id);
       }
     }
     themeMode();

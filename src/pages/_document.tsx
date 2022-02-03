@@ -47,14 +47,17 @@ class MyDocument extends Document {
           />
           {/* 一般 */}
           <meta name="application-name" content="kai-mono" />
-          <meta name="theme-color" content="#000" />
+          <meta name="theme-color" content="#65D8A5" />
           <meta name="description" content="買い物リスト共有アプリです" />
           <link rel="icon" sizes="192x192" href="/icon-192x192.png" />
           <link rel="icon" href="/favicon.ico" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap" rel="stylesheet" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Potta+One&display=swap"
+            rel="stylesheet"
+          />
           <title>kai-mono</title>
         </Head>
         <body>
