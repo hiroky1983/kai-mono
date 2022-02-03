@@ -59,45 +59,49 @@ const About: NextPage = () => {
           <h2 className="text-center py-6 font-bold text-2xl">
             PWA対応でスマホアプリのように使える
           </h2>
-          <div className="grid md:grid-rows-2">
-            <div className="">
-              <Image
-                className="object-contain"
-                src="/pwadisc1.png"
-                layout="responsive"
-                width="240px"
-                height="240px"
-              />
+          <div className="grid md:grid-cols-2">
+            <div className="md:flex items-center">
+              <div className="flex justify-center">
+                <Image
+                  className="object-contain"
+                  src="/pwadisc1.png"
+                  width="320px"
+                  height="320px"
+                />
+              </div>
               <p>①スマホから下の赤枠のボタンを押す</p>
             </div>
-            <div className="">
-              <Image
-                className="object-contain"
-                src="/pwadisc2.png"
-                layout="responsive"
-                width="240px"
-                height="240px"
-              />
+            <div className="md:flex items-center">
+              <div className="flex justify-center">
+                <Image
+                  className="object-contain"
+                  src="/pwadisc2.png"
+                  width="320px"
+                  height="320px"
+                />
+              </div>
               <p>②赤枠の『ホーム画面に追加』ボタンを押す</p>
             </div>
-            <div className="">
-              <Image
-                className="object-contain"
-                src="/pwadisc3.png"
-                layout="responsive"
-                width="240px"
-                height="240px"
-              />
+            <div className="md:flex items-center">
+              <div className="flex justify-center">
+                <Image
+                  className="object-contain"
+                  src="/pwadisc3.png"
+                  width="320px"
+                  height="320px"
+                />
+              </div>
               <p>③ホーム画面に追加できていればOK</p>
             </div>
-            <div className="">
-              <Image
-                className="object-contain"
-                src="/pwadisc4.png"
-                layout="responsive"
-                width="240px"
-                height="240px"
-              />
+            <div className="md:flex items-center">
+              <div className="flex justify-center">
+                <Image
+                  className="object-contain"
+                  src="/pwadisc4.png"
+                  width="320px"
+                  height="320px"
+                />
+              </div>
               <p>④スマホアプリと同じ挙動で仕様することが出来ます</p>
             </div>
           </div>
