@@ -48,9 +48,9 @@ const Container = (props: Props) => {
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (e, session) => {
       if (e == "SIGNED_IN") {
-        setSession(session.user)
+        setSession(session.user);
       }
-    })
+    });
     getData();
   }, [user, setWaitApproveItems]);
 
@@ -65,11 +65,18 @@ const Container = (props: Props) => {
       if (session) {
         const findData = userData.data.findIndex((data) => {
           return data.user_id === session.id;
-        })
+        });
         if (findData === -1 && session) {
           try {
             //Todo ユニークなIDの発行が必要
-            const initialUser = { id: 123456789, user_id: session.id, pairUser: "", isDarkMode: false, user_name: fullName, avatar_url: avatarUrl }
+            const initialUser = {
+              id: 123456789,
+              user_id: session.id,
+              pairUser: "",
+              isDarkMode: false,
+              user_name: fullName,
+              avatar_url: avatarUrl,
+            };
             console.log(initialUser);
             await supabase.from("user").insert(initialUser);
           } catch (error) {
@@ -85,14 +92,16 @@ const Container = (props: Props) => {
       setApproveItems(appItem);
       setWaitApproveItems(waitItem);
 
-      const maxNum = Math.max(...listData.map((i) => {
-        if (!i) {
-          return 0;
-        } else {
-          return i.id
-        }
-      }));
-      setMaxId(maxNum)
+      const maxNum = Math.max(
+        ...listData.map((i) => {
+          if (!i) {
+            return 0;
+          } else {
+            return i.id;
+          }
+        })
+      );
+      setMaxId(maxNum);
     } catch (error) {
       console.log(error);
     }
@@ -176,19 +185,29 @@ const Container = (props: Props) => {
         <div>
           <h2 className="text-xl underline mt-4">承認待ちのアイテム</h2>
           <div className="my-2 h-60 overflow-y-scroll">
-            <WaitList
-              user={user}
-              items={waitApproveItems}
-              onClickAddItems={(i) => onClickAddItems(i)}
-              onClickDeleteItems={(i) => onClickDeleteItems(i)}
-            />
+            {waitApproveItems &&
+              waitApproveItems.map((item, i) => {
+                return (
+                  <WaitList
+                    user={user}
+                    item={item}
+                    onClickAddItems={() => onClickAddItems(i)}
+                    onClickDeleteItems={() => onClickDeleteItems(i)}
+                  />
+                );
+              })}
           </div>
           <h2 className="text-xl underline mt-4">買い物リスト</h2>
           <div className="my-2 h-60 overflow-y-scroll">
-            <List
-              items={approveItems}
-              onClickShoppedItems={(i) => onClickShoppedItems(i)}
-            />
+            {approveItems &&
+              approveItems.map((item, i) => {
+                return (
+                  <List
+                    item={item}
+                    onClickShoppedItems={() => onClickShoppedItems(i)}
+                  />
+                );
+              })}
           </div>
         </div>
       </div>
@@ -211,7 +230,11 @@ const Home: NextPage = () => {
                 onlyThirdPartyProviders
               />
               <Button
-                style={{ marginTop: "30px", maxWidth: "400px", backgroundColor: "#65D8A5" }}
+                style={{
+                  marginTop: "30px",
+                  maxWidth: "400px",
+                  backgroundColor: "#65D8A5",
+                }}
                 onClick={async () => {
                   try {
                     const { user, error } = await supabase.auth.signIn({
@@ -230,7 +253,7 @@ const Home: NextPage = () => {
           </div>
         </Container>
       </Auth.UserContextProvider>
-    </Layout >
+    </Layout>
   );
 };
 

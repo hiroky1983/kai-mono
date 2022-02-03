@@ -2,32 +2,26 @@ import React, { VFC } from "react";
 import { ItemsData } from "../pages";
 
 type Props = {
-  items: ItemsData[];
-  onClickShoppedItems: (i: number) => void;
+  item: ItemsData;
+  onClickShoppedItems: () => void;
 };
 
 export const List: VFC<Props> = (props) => {
-  const { items, onClickShoppedItems } = props;
+  const { item, onClickShoppedItems } = props;
   return (
-    <div>
-      <ul>
-        {items && items.map((item, i) => {
-          return (
-            <div
-              className="flex my-2 items-center justify-between gap-2"
-              key={item.id}
-            >
-              <li className="flex-grow">{item.itemName}</li>
-              <button
-                onClick={() => onClickShoppedItems(i)}
-                className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-primary text-white rounded-lg"
-              >
-                買った
-              </button>
-            </div>
-          );
-        })}
-      </ul>
-    </div>
+    <ul>
+      <div
+        className="flex my-2 items-center justify-between gap-2"
+        key={item.id}
+      >
+        <li className="flex-grow">{item.itemName}</li>
+        <button
+          onClick={onClickShoppedItems}
+          className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-primary text-white rounded-lg"
+        >
+          買った
+        </button>
+      </div>
+    </ul>
   );
 };

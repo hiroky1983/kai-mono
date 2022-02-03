@@ -66,25 +66,27 @@ export const Footer: VFC = () => {
         e.preventDefault();
       } else {
         setLoading(true);
-        const { data, error } = await supabase.from("user").select("user_name")
+        const { data, error } = await supabase.from("user").select("user_name");
         if (error) {
           throw new Error("情報の取得に失敗しました");
         }
         const result = data.find((d) => d.user_name === searchUserName);
-        result ? setResultName(result.user_name) : setResultName("ユーザーが見つかりませんでした");
-        setLoading(false)
-        setSearchUserName("")
+        result
+          ? setResultName(result.user_name)
+          : setResultName("ユーザーが見つかりませんでした");
+        setLoading(false);
+        setSearchUserName("");
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const onClickAddPairUser = async () => {
     alert("追加したよ");
-    setResultName("")
+    setResultName("");
     toggle();
-  }
+  };
 
   return (
     <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-16 sm:h-20">
@@ -95,7 +97,9 @@ export const Footer: VFC = () => {
         style={{ display: "grid", gap: "12px", padding: "6px 0px" }}
         overlay={[
           <Dropdown.Item>
-            <Typography.Text>{userName ? userName : "ユーザー名はありません"}</Typography.Text>
+            <Typography.Text>
+              {userName ? userName : "ユーザー名はありません"}
+            </Typography.Text>
           </Dropdown.Item>,
           <Divider light />,
           <Dropdown.Item
@@ -107,7 +111,10 @@ export const Footer: VFC = () => {
           <Dropdown.Item icon={<IconSearch />} onClick={toggle}>
             <Typography.Text>ユーザーを探す</Typography.Text>
           </Dropdown.Item>,
-          <Dropdown.Item icon={<IconBook />} onClick={() => router.push("/about")}>
+          <Dropdown.Item
+            icon={<IconBook />}
+            onClick={() => router.push("/about")}
+          >
             <Typography.Text>このアプリについて</Typography.Text>
           </Dropdown.Item>,
           <Divider light />,
@@ -118,7 +125,7 @@ export const Footer: VFC = () => {
                 supabase.auth.signOut();
                 router.replace("/");
               } else {
-                router.push("/")
+                router.push("/");
               }
             }}
           >
@@ -126,13 +133,21 @@ export const Footer: VFC = () => {
           </Dropdown.Item>,
         ]}
       >
-        <Button block size="medium" style={{ backgroundColor: "#65D8A5", padding: "16px" }}>
+        <Button
+          block
+          size="medium"
+          style={{ backgroundColor: "#65D8A5", padding: "16px" }}
+        >
           <IconSettings />
         </Button>
       </Dropdown>
       <Modal
         closable
-        confirmText={resultName === "" || resultName === "ユーザーが見つかりませんでした" ? "検索" : "保存"}
+        confirmText={
+          resultName === "" || resultName === "ユーザーが見つかりませんでした"
+            ? "検索"
+            : "保存"
+        }
         cancelText="キャンセル"
         title="ユーザー検索"
         description="ユーザーを検索することができます。"
@@ -142,7 +157,11 @@ export const Footer: VFC = () => {
           setSearchUserName("");
           toggle();
         }}
-        onConfirm={resultName === "" || resultName === "ユーザーが見つかりませんでした" ? onClickSearchUser : onClickAddPairUser}
+        onConfirm={
+          resultName === "" || resultName === "ユーザーが見つかりませんでした"
+            ? onClickSearchUser
+            : onClickAddPairUser
+        }
         contentStyle={{ width: "380px" }}
         loading={loading}
       >
@@ -155,6 +174,6 @@ export const Footer: VFC = () => {
           value={searchUserName}
         />
       </Modal>
-    </footer >
+    </footer>
   );
 };
