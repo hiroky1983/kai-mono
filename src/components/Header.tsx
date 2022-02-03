@@ -20,14 +20,19 @@ export const Header: VFC = () => {
     const themeMode = async () => {
       if (isDarkMode) {
         document.body.classList.add("dark");
-        await supabase.from("user").update({ isDarkMode: isDarkMode })
+        console.log("========trueだよ==========");
+        console.log(isDarkMode);
+
+        await supabase.from("user").update({ isDarkMode: isDarkMode }).eq("user_id", user.id);
       } else {
         document.body.classList.remove("dark");
-        await supabase.from("user").update({ isDarkMode: isDarkMode })
+        console.log("========falseだよ==========");
+
+        await supabase.from("user").update({ isDarkMode: isDarkMode }).eq("user_id", user.id);
       }
     }
     themeMode();
-  }, [isDarkMode]);
+  }, [toggleDarkMode]);
 
   return (
     <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center p-4 md:px-12 lg:px-18">

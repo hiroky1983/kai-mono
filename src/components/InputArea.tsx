@@ -12,7 +12,7 @@ export const InputArea: VFC<Props> = (porps) => {
     <div className="flex h-full">
       <input
         type="text"
-        className="mr-2 px-2 py-1 lg:py-2 w-3/5 rounded-md ring-1 ring-primary dark:text-gray-600"
+        className="mr-2 px-2 py-1 lg:py-2 w-4/5 rounded-md ring-1 ring-primary dark:text-gray-600"
         placeholder="買うものを入力"
         onChange={handleChange}
         value={inputText}
