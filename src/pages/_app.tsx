@@ -13,13 +13,20 @@ export const Theme = createContext<theme>({ isDarkMode, setIsDarkMode, toggleDar
 function MyApp({ Component, pageProps }: AppProps) {
   const user = supabase.auth.user()
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+  console.log(isDarkMode);
+
+  const toggleDarkMode = async () => {
+    setIsDarkMode(!isDarkMode);
+
+  }
+
   const initdata = async () => {
     if (user) {
-      const { data: userData, error } = await supabase.from("user").select("user_id");
+      const { data: userData, error } = await supabase.from("user").select("*");
       const data = userData.find((d) => {
         return d.user_id === user.id
       })
+      console.log(data.isDarkMode);
       setIsDarkMode(data.isDarkMode)
     }
   }
