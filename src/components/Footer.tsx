@@ -116,7 +116,7 @@ export const Footer: VFC = () => {
             <Typography.Text>過去の買い物リスト</Typography.Text>
           </Dropdown.Item>,
 
-          <Dropdown.Item icon={<IconSearch />} onClick={toggle} disabled={!user && true}>
+          <Dropdown.Item icon={<IconSearch />} onClick={toggle} disabled={!user || router.pathname !== "/" && true}>
             <Typography.Text>ユーザーを探す</Typography.Text>
           </Dropdown.Item>,
 
