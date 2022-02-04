@@ -109,7 +109,7 @@ const About: NextPage = () => {
             </div>
           </div>
         </div>
-        <div className="relative mb-8">
+        <div className="relative pb-8">
           <h2 className="text-center py-16 font-extrabold text-4xl">
             さっそくつかってみよう
           </h2>
