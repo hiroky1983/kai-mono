@@ -6,14 +6,12 @@ import React, {
   VFC,
 } from "react";
 import {
-  Alert,
   Button,
   Divider,
   Dropdown,
   IconBook,
   IconClipboard,
   IconLogOut,
-  IconMail,
   IconSearch,
   IconSettings,
   IconUser,
@@ -23,7 +21,6 @@ import {
 } from "@supabase/ui";
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
-import Image from "next/image";
 import { UserState } from "../pages";
 
 const THIS_YEAR = new Date().getFullYear();
