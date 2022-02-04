@@ -22,7 +22,6 @@ import {
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
 import { UserState } from "../pages";
-import { User } from "@supabase/supabase-js";
 
 const THIS_YEAR = new Date().getFullYear();
 
@@ -81,16 +80,12 @@ export const Footer: VFC = () => {
     }
   };
 
-  console.log(resultName);
-
   const onClickAddPairUser = async () => {
     const conversionPairUser = await supabase.from("user").select();
     const data = conversionPairUser.data;
     const pairUser = data.find((d) => {
       return d.user_name === resultName;
     });
-    console.log(pairUser);
-
     await supabase.from("user").update({ pairUser: pairUser.user_id }).eq("user_id", user.id)
     setResultName("");
     toggle();

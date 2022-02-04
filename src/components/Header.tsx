@@ -2,8 +2,6 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
-  useState,
   VFC,
 } from "react";
 import { Toggle } from "@supabase/ui";

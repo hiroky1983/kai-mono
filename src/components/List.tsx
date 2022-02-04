@@ -1,5 +1,4 @@
-import { IconCamera } from "@supabase/ui";
-import React, { ChangeEvent, useState, VFC } from "react";
+import React, { VFC } from "react";
 import { ItemsData } from "../pages";
 
 type Props = {
