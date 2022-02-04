@@ -88,6 +88,15 @@ export const Footer: VFC = () => {
     toggle();
   };
 
+  const onClickSignOut = () => {
+    if (user) {
+      supabase.auth.signOut();
+      router.replace("/");
+    } else {
+      router.push("/");
+    }
+  }
+
   return (
     <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-16 sm:h-20">
       <small lang="en" className="ml-2">
@@ -120,14 +129,7 @@ export const Footer: VFC = () => {
           <Divider light />,
           <Dropdown.Item
             icon={<IconLogOut />}
-            onClick={() => {
-              if (user) {
-                supabase.auth.signOut();
-                router.replace("/");
-              } else {
-                router.push("/");
-              }
-            }}
+            onClick={onClickSignOut}
           >
             {user ? "ログアウト" : "ログイン"}
           </Dropdown.Item>,
