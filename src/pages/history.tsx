@@ -34,6 +34,14 @@ const History: NextPage = () => {
     return [...reItem];
   };
 
+  const onClickDeleteItems = async (i: number) => {
+    const clickData = data[i];
+    await supabase.from("kai-mono-list").delete().eq("id", clickData.id);
+    const item = data.splice(i, 1);
+    mutate("historyData", item)
+
+  };
+
   return (
     <Layout>
       <div className="mt-4 mx-4">
@@ -53,6 +61,12 @@ const History: NextPage = () => {
                   className="inline-block px-3 py-1 bg-primary text-white rounded-lg"
                 >
                   再購入
+                </button>
+                <button
+                  onClick={() => onClickDeleteItems(i)}
+                  className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg"
+                >
+                  {user.id === d.user_id ? "削除" : "要らない"}
                 </button>
               </div>
             );
