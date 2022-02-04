@@ -15,24 +15,24 @@ const About: NextPage = () => {
           width="300px"
           height="200px"
         />
-        <p className="absolute top-6 left-6 text-white p-3 bg-gray-800 bg-opacity-30 font-extrabold">
+        <p className="absolute top-1/3 left-4 text-white text-opacity-80 text-2xl sm:text-4xl p-3 bg-gray-800 bg-opacity-30 font-extrabold md:font-black md:text-6xl">
           買い物をもっと効率的に
         </p>
       </div>
       <div className="mx-4">
-        <h2 className="text-center py-6 font-bold text-2xl">
+        <h2 className="text-center py-6 font-extrabold text-4xl">
           このアプリでできること
         </h2>
         <div className="flex justify-center my-4 text-center">
           <div className="grid gap-4 md:flex">
-            <div className="w-80 shadow-lg p-6 rounded-lg dark:bg-gray-500">
+            <div className="w-80 shadow-lg p-8 rounded-lg dark:bg-gray-500">
               <div className="flex justify-center">
                 <Image src="/Shopping-bro .png" width="180px" height="240px" />
               </div>
-              <h3 className="py-2 font-bold">パートナーとのリストの共有</h3>
-              <p>買うもののリストを相手と共有できます</p>
+              <h3 className="py-4 font-bold text-2xl">パートナーとのリストの共有</h3>
+              <p className="mb-6">買うもののリストを相手と共有できます</p>
             </div>
-            <div className="w-80 shadow-lg p-6 rounded-lg dark:bg-gray-500">
+            <div className="w-80 shadow-lg p-8 rounded-lg dark:bg-gray-500">
               <div className="flex justify-center">
                 <Image
                   src="/Add tasks-rafiki .png"
@@ -40,12 +40,12 @@ const About: NextPage = () => {
                   height="240px"
                 />
               </div>
-              <h3 className="py-2 font-bold">購入後の完了確認</h3>
-              <p>
+              <h3 className="py-4 font-bold text-2xl">購入後の完了確認</h3>
+              <p className="mb-6">
                 パートナーに買うものを事前に確認してもらい買うものの重複を防げ余分なコストを削減できます
               </p>
             </div>
-            <div className="w-80 shadow-lg p-6 rounded-lg dark:bg-gray-500">
+            <div className="w-80 shadow-lg p-8 rounded-lg dark:bg-gray-500">
               <div className="flex justify-center">
                 <Image
                   src="/Thinking face-rafiki .png"
@@ -53,13 +53,13 @@ const About: NextPage = () => {
                   height="240px"
                 />
               </div>
-              <h3 className="py-2 font-bold">買い物時スマホからリストを確認</h3>
-              <p>買いもののときの買い忘れを防ぐことができます</p>
+              <h3 className="py-4 font-bold text-2xl">買い物時スマホからリストを確認</h3>
+              <p className="mb-6">買いもののときの買い忘れを防ぐことができます</p>
             </div>
           </div>
         </div>
         <div>
-          <h2 className="text-center py-6 font-bold text-2xl">
+          <h2 className="text-center py-6 font-extrabold text-4xl">
             PWA対応でスマホアプリのように使える
           </h2>
           <div className="grid md:grid-cols-2 gap-10">
@@ -72,7 +72,7 @@ const About: NextPage = () => {
                   height="320px"
                 />
               </div>
-              <p>①スマホから下の赤枠のボタンを押す</p>
+              <p className="text-lg">①スマホから下の赤枠のボタンを押す</p>
             </div>
             <div className="md:flex items-center">
               <div className="flex justify-center">
@@ -83,7 +83,7 @@ const About: NextPage = () => {
                   height="320px"
                 />
               </div>
-              <p>②赤枠の『ホーム画面に追加』ボタンを押す</p>
+              <p className="text-lg">②赤枠の『ホーム画面に追加』ボタンを押す</p>
             </div>
             <div className="md:flex items-center">
               <div className="flex justify-center">
@@ -94,7 +94,7 @@ const About: NextPage = () => {
                   height="320px"
                 />
               </div>
-              <p>③ホーム画面に追加できていればOK</p>
+              <p className="text-lg">③ホーム画面に追加できていればOK</p>
             </div>
             <div className="md:flex items-center">
               <div className="flex justify-center">
@@ -105,12 +105,12 @@ const About: NextPage = () => {
                   height="320px"
                 />
               </div>
-              <p>④スマホアプリと同じ挙動で仕様することが出来ます</p>
+              <p className="text-lg">④スマホアプリと同じ挙動で仕様することが出来ます</p>
             </div>
           </div>
         </div>
         <div className="relative mb-8">
-          <h2 className="text-center py-6 font-bold text-2xl">
+          <h2 className="text-center py-16 font-extrabold text-4xl">
             さっそくつかってみよう
           </h2>
           <Image
@@ -127,6 +127,7 @@ const About: NextPage = () => {
               bottom: "30px",
               right: "20px",
               padding: "18px",
+              fontSize: "20px"
             }}
             onClick={() => router.push("/")}
           >
