@@ -9,13 +9,6 @@ type Props = {
 
 export const List: VFC<Props> = (props) => {
   const { item, onClickShoppedItems } = props;
-  const [file, setFile] = useState<File | undefined>(null);
-  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
-    setFile(e.target.files[0]);
-  };
-
-  console.log(file);
-
   return (
     <ul>
       <div
@@ -29,10 +22,6 @@ export const List: VFC<Props> = (props) => {
         >
           買った
         </button>
-        <label className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg">
-          <IconCamera />
-          <input type="file" className="hidden z-10" onChange={handleChangeFile} />
-        </label>
       </div>
     </ul>
   );

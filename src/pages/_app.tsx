@@ -33,6 +33,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const user = supabase.auth.user();
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  console.log(user);
+
+
   const toggleDarkMode = async () => {
     darkMode(!isDarkMode);
     await supabase
