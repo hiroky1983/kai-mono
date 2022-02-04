@@ -7,10 +7,8 @@ import React, {
   VFC,
 } from "react";
 import { Toggle } from "@supabase/ui";
-
 import Link from "next/link";
 import Image from "next/image";
-import { supabase } from "../libs/supabase";
 import { Theme } from "../pages/_app";
 
 export type theme = {
