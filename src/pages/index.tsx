@@ -37,6 +37,19 @@ export type UserState = {
   avatar_url: string;
 };
 
+const makeId = () => {
+  const S =
+    "0123456789";
+  const N = 16;
+  const randomChar = Array.from(
+    crypto.getRandomValues(new Uint32Array(N))
+  )
+    .map((n) => S[n % S.length])
+    .join("");
+  const fileName = randomChar;
+  return parseInt(fileName);
+}
+
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
   const [waitApproveItems, setWaitApproveItems] = useState<ItemsData[]>();
@@ -72,7 +85,7 @@ const Container = (props: Props) => {
           try {
             //Todo ユニークなIDの発行が必要
             const initialUser = {
-              id: 123456789,
+              id: makeId(),
               user_id: session.id,
               pairUser: "",
               isDarkMode: false,
@@ -260,10 +273,5 @@ const Home: NextPage = () => {
     </Layout>
   );
 };
-
-export const getStaticPorps = async () => {
-  const { data: itemsData, error: itemsError } = await supabase.from("kai-mono-list").select();
-  const { data: userData, error: userError } = await supabase.from("users").select();
-}
 
 export default Home;
