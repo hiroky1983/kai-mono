@@ -33,6 +33,8 @@ export type UserState = {
   id: string;
   pairUser: string;
   isDarkMode: boolean;
+  user_name: string;
+  avatar_url: string;
 };
 
 const Container = (props: Props) => {
@@ -176,7 +178,7 @@ const Container = (props: Props) => {
 
   if (user) {
     return (
-      <div className="mx-4 mt-6">
+      <div>
         <InputArea
           inputText={inputText}
           handleChange={handleChange}
@@ -220,46 +222,48 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Auth.UserContextProvider supabaseClient={supabase}>
-        <Container>
-          <div>
-            <div className="w-full sm:w-96">
-              <Auth
-                supabaseClient={supabase}
-                providers={["google"]}
-                socialColors={true}
-                onlyThirdPartyProviders
-              />
-              <Button
-                style={{
-                  marginTop: "30px",
-                  maxWidth: "400px",
-                  backgroundColor: "#65D8A5",
-                }}
-                onClick={async () => {
-                  try {
-                    const { user, error } = await supabase.auth.signIn({
-                      email: "hirockysun@gmail.com",
-                      password: "sa198308",
-                    });
-                    console.log(user, error);
-                  } catch (error) {
-                    console.error(error);
-                  }
-                }}
-              >
-                テストログイン
-              </Button>
+        <div className="mx-4 mt-6">
+          <Container>
+            <div>
+              <div className="w-full sm:w-96">
+                <Auth
+                  supabaseClient={supabase}
+                  providers={["google"]}
+                  socialColors={true}
+                  onlyThirdPartyProviders
+                />
+                <Button
+                  style={{
+                    marginTop: "30px",
+                    maxWidth: "400px",
+                    backgroundColor: "#65D8A5",
+                  }}
+                  onClick={async () => {
+                    try {
+                      const { user, error } = await supabase.auth.signIn({
+                        email: "hirockysun@gmail.com",
+                        password: "sa198308",
+                      });
+                      console.log(user, error);
+                    } catch (error) {
+                      console.error(error);
+                    }
+                  }}
+                >
+                  テストログイン
+                </Button>
+              </div>
             </div>
-          </div>
-        </Container>
+          </Container>
+        </div>
       </Auth.UserContextProvider>
     </Layout>
   );
 };
 
 export const getStaticPorps = async () => {
-  const { data:itemsData, error: itemsError } = await supabase.from("kai-mono-list").select();
-  const {data: userData, error: userError} = await supabase.from("users").select();
+  const { data: itemsData, error: itemsError } = await supabase.from("kai-mono-list").select();
+  const { data: userData, error: userError } = await supabase.from("users").select();
 }
 
 export default Home;
