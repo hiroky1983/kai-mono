@@ -24,6 +24,7 @@ import {
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
 import Image from "next/image";
+import { UserState } from "../pages";
 
 const THIS_YEAR = new Date().getFullYear();
 
@@ -70,7 +71,7 @@ export const Footer: VFC = () => {
         if (error) {
           throw new Error("情報の取得に失敗しました");
         }
-        const result = data.find((d) => d.user_name === searchUserName);
+        const result: UserState = data.find((d) => d.user_name === searchUserName);
         result
           ? setResultName(result.user_name)
           : setResultName("ユーザーが見つかりませんでした");
@@ -117,9 +118,11 @@ export const Footer: VFC = () => {
           >
             <Typography.Text>過去の買い物リスト</Typography.Text>
           </Dropdown.Item>,
-          <Dropdown.Item icon={<IconSearch />} onClick={toggle}>
+
+          <Dropdown.Item icon={<IconSearch />} onClick={toggle} disabled={!user && true}>
             <Typography.Text>ユーザーを探す</Typography.Text>
           </Dropdown.Item>,
+
           <Dropdown.Item
             icon={<IconBook />}
             onClick={() => router.push("/about")}
