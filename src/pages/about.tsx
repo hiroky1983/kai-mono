@@ -2,7 +2,6 @@ import { Button } from "@supabase/ui";
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import Image from "next/image";
-import { Layout } from "../components/Layout";
 
 const About: NextPage = () => {
   const router = useRouter();

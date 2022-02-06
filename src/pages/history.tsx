@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import useSWR, { useSWRConfig } from "swr";
 import { ItemsData } from ".";
-import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
 
 const fecther = async (): Promise<ItemsData[]> => {
