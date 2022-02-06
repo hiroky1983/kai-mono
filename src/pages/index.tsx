@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 import React from "react";
-import { Layout } from "../components/Layout";
 import { List } from "../components/List";
 import { supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
