@@ -65,7 +65,7 @@ const History: NextPage = () => {
                   onClick={() => onClickDeleteItems(i)}
                   className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg"
                 >
-                  {user.id === d.user_id ? "削除" : "要らない"}
+                  削除
                 </button>
               </div>
             );
