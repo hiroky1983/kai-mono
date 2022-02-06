@@ -12,9 +12,9 @@ import { theme } from "../components/Header";
 import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
 
-let isDarkMode: boolean;
-let setIsDarkMode: Dispatch<SetStateAction<boolean>>;
-let toggleDarkMode: () => void;
+let isDarkMode;
+let setIsDarkMode;
+let toggleDarkMode;
 
 export const Theme = createContext<theme>({
   isDarkMode,
@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   const initdata = async () => {
-    const { data: userData, error } = await supabase.from("user").select("*");
+    const { data: userData } = await supabase.from("user").select("*");
     const data = userData.find((d) => {
       return d.user_id === user.id;
     });
@@ -61,11 +61,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <Layout>
-      <Theme.Provider value={{ isDarkMode, setIsDarkMode, toggleDarkMode }}>
-        <Component {...pageProps} />
-      </Theme.Provider>
-    </Layout>
+    <Theme.Provider value={{ isDarkMode, setIsDarkMode, toggleDarkMode }}>
+      <Component {...pageProps} />
+    </Theme.Provider>
   );
 }
 

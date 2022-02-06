@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import useSWR, { useSWRConfig } from "swr";
 import { ItemsData } from ".";
+import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
 
 const fecther = async (): Promise<ItemsData[]> => {
@@ -41,35 +42,37 @@ const History: NextPage = () => {
   };
 
   return (
-    <div className="mt-4 mx-4">
-      <h2 className="text-xl underline">過去のリスト</h2>
-      <ul>
-        {data.map((d, i) => {
-          return (
-            <div
-              key={d.id}
-              className="flex my-1 items-center justify-between gap-2"
-            >
-              <li className="flex-grow">{d.itemName}</li>
-              <button
-                onClick={() => {
-                  reverseItem(i);
-                }}
-                className="inline-block px-3 py-1 bg-primary text-white rounded-lg"
+    <Layout>
+      <div className="mt-4 mx-4">
+        <h2 className="text-xl underline">過去のリスト</h2>
+        <ul>
+          {data.map((d, i) => {
+            return (
+              <div
+                key={d.id}
+                className="flex my-1 items-center justify-between gap-2"
               >
-                再購入
-              </button>
-              <button
-                onClick={() => onClickDeleteItems(i)}
-                className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg"
-              >
-                {user.id === d.user_id ? "削除" : "要らない"}
-              </button>
-            </div>
-          );
-        })}
-      </ul>
-    </div>
+                <li className="flex-grow">{d.itemName}</li>
+                <button
+                  onClick={() => {
+                    reverseItem(i);
+                  }}
+                  className="inline-block px-3 py-1 bg-primary text-white rounded-lg"
+                >
+                  再購入
+                </button>
+                <button
+                  onClick={() => onClickDeleteItems(i)}
+                  className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg"
+                >
+                  {user.id === d.user_id ? "削除" : "要らない"}
+                </button>
+              </div>
+            );
+          })}
+        </ul>
+      </div>
+    </Layout>
   );
 };
 

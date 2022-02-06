@@ -14,6 +14,7 @@ import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
 import { useRouter } from "next/dist/client/router";
 import { User } from "@supabase/supabase-js";
+import { Layout } from "../components/Layout";
 
 type Props = {
   children: ReactNode;
@@ -214,7 +215,7 @@ const Container = (props: Props) => {
           </div>
           <div className="flex-1">
             <h2 className="text-xl underline mt-4">買い物リスト</h2>
-            <div className="my-2 overflow-y-scroll max-h-60">
+            <div className="my-2 overflow-y-scroll max-h-64">
               {approveItems &&
                 approveItems.map((item, i) => {
                   return (
@@ -236,6 +237,7 @@ const Container = (props: Props) => {
 
 const Home: NextPage = () => {
   return (
+    <Layout>
       <Auth.UserContextProvider supabaseClient={supabase}>
         <div className="mx-4 mt-6">
           <Container>
@@ -272,7 +274,7 @@ const Home: NextPage = () => {
           </Container>
         </div>
       </Auth.UserContextProvider>
-    
+    </Layout>
   );
 };
 
