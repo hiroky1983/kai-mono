@@ -55,7 +55,9 @@ const Container = (props: Props) => {
   const [session, setSession] = useState<User>(null);
   const router = useRouter();
   const { user } = Auth.useUser();
-  const { id } = router.query;
+  const id = router.query.id;
+
+  console.log(id);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (e, session) => {
@@ -89,7 +91,6 @@ const Container = (props: Props) => {
               user_name: fullName,
               avatar_url: avatarUrl,
             };
-            console.log(initialUser);
             await supabase.from("user").insert(initialUser);
           } catch (error) {
             console.log(error);
@@ -194,34 +195,38 @@ const Container = (props: Props) => {
           handleChange={handleChange}
           onClickAddWaitItems={onClickAddWaitItems}
         />
-        <div>
-          <h2 className="text-xl underline mt-4">承認待ちのアイテム</h2>
-          <div className="my-2 h-60 overflow-y-scroll">
-            {waitApproveItems &&
-              waitApproveItems.map((item, i) => {
-                return (
-                  <WaitList
-                    key={item.id}
-                    user={user}
-                    item={item}
-                    onClickAddItems={() => onClickAddItems(i)}
-                    onClickDeleteItems={() => onClickDeleteItems(i)}
-                  />
-                );
-              })}
+        <div className="flex flex-col">
+          <div className="flex-1">
+            <h2 className="text-xl underline mt-4">承認待ちのアイテム</h2>
+            <div className="my-2 overflow-y-scroll max-h-60">
+              {waitApproveItems &&
+                waitApproveItems.map((item, i) => {
+                  return (
+                    <WaitList
+                      key={item.id}
+                      user={user}
+                      item={item}
+                      onClickAddItems={() => onClickAddItems(i)}
+                      onClickDeleteItems={() => onClickDeleteItems(i)}
+                    />
+                  );
+                })}
+            </div>
           </div>
-          <h2 className="text-xl underline mt-4">買い物リスト</h2>
-          <div className="my-2 h-60 overflow-y-scroll">
-            {approveItems &&
-              approveItems.map((item, i) => {
-                return (
-                  <List
-                    item={item}
-                    key={item.id}
-                    onClickShoppedItems={() => onClickShoppedItems(i)}
-                  />
-                );
-              })}
+          <div className="flex-1">
+            <h2 className="text-xl underline mt-4">買い物リスト</h2>
+            <div className="my-2 overflow-y-scroll max-h-60">
+              {approveItems &&
+                approveItems.map((item, i) => {
+                  return (
+                    <List
+                      item={item}
+                      key={item.id}
+                      onClickShoppedItems={() => onClickShoppedItems(i)}
+                    />
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>
@@ -232,7 +237,6 @@ const Container = (props: Props) => {
 
 const Home: NextPage = () => {
   return (
-    <Layout>
       <Auth.UserContextProvider supabaseClient={supabase}>
         <div className="mx-4 mt-6">
           <Container>
@@ -269,7 +273,7 @@ const Home: NextPage = () => {
           </Container>
         </div>
       </Auth.UserContextProvider>
-    </Layout>
+    
   );
 };
 

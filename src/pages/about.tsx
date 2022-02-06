@@ -7,7 +7,7 @@ import { Layout } from "../components/Layout";
 const About: NextPage = () => {
   const router = useRouter();
   return (
-    <Layout>
+    <div>
       <div className="relative">
         <Image
           src="/gettyimages-542930780-612x612.jpeg"
@@ -29,7 +29,9 @@ const About: NextPage = () => {
               <div className="flex justify-center">
                 <Image src="/Shopping-bro .png" width="180px" height="240px" />
               </div>
-              <h3 className="py-4 font-bold text-2xl">パートナーとのリストの共有</h3>
+              <h3 className="py-4 font-bold text-2xl">
+                パートナーとのリストの共有
+              </h3>
               <p className="mb-6">買うもののリストを相手と共有できます</p>
             </div>
             <div className="w-80 shadow-lg p-8 rounded-lg dark:bg-gray-500">
@@ -53,8 +55,12 @@ const About: NextPage = () => {
                   height="240px"
                 />
               </div>
-              <h3 className="py-4 font-bold text-2xl">買い物時スマホからリストを確認</h3>
-              <p className="mb-6">買いもののときの買い忘れを防ぐことができます</p>
+              <h3 className="py-4 font-bold text-2xl">
+                買い物時スマホからリストを確認
+              </h3>
+              <p className="mb-6">
+                買いもののときの買い忘れを防ぐことができます
+              </p>
             </div>
           </div>
         </div>
@@ -105,7 +111,9 @@ const About: NextPage = () => {
                   height="320px"
                 />
               </div>
-              <p className="text-lg">④スマホアプリと同じ挙動で仕様することが出来ます</p>
+              <p className="text-lg">
+                ④スマホアプリと同じ挙動で仕様することが出来ます
+              </p>
             </div>
           </div>
         </div>
@@ -127,7 +135,7 @@ const About: NextPage = () => {
               bottom: "30px",
               right: "20px",
               padding: "18px",
-              fontSize: "20px"
+              fontSize: "20px",
             }}
             onClick={() => router.push("/")}
           >
@@ -135,7 +143,7 @@ const About: NextPage = () => {
           </Button>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

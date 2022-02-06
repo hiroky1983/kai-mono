@@ -10,6 +10,7 @@ import {
 } from "react";
 import "tailwindcss/tailwind.css";
 import { theme } from "../components/Header";
+import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
 
 let isDarkMode: boolean;
@@ -61,9 +62,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <Theme.Provider value={{ isDarkMode, setIsDarkMode, toggleDarkMode }}>
-      <Component {...pageProps} />
-    </Theme.Provider>
+    <Layout>
+      <Theme.Provider value={{ isDarkMode, setIsDarkMode, toggleDarkMode }}>
+        <Component {...pageProps} />
+      </Theme.Provider>
+    </Layout>
   );
 }
 
