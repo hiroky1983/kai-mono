@@ -53,11 +53,7 @@ const Container = (props: Props) => {
   const [approveItems, setApproveItems] = useState<ItemsData[]>();
   const [maxId, setMaxId] = useState(0);
   const [session, setSession] = useState<User>(null);
-  const router = useRouter();
   const { user } = Auth.useUser();
-  const id = router.query.id;
-
-  console.log(id);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (e, session) => {
@@ -73,16 +69,28 @@ const Container = (props: Props) => {
       const userMetaData = user.user_metadata;
       const avatarUrl = userMetaData.avatar_url;
       const fullName = userMetaData.full_name;
-      const userData = await supabase.from("user").select();
-      const list = await supabase.from("kai-mono-list").select();
+      const userQuery = await supabase.from("user").select();
+      const userData = userQuery.data;
+      const userDataId = userData.find((d) => {
+        return d.pairUser === user.id;
+      });
+      const list = await supabase
+        .from("kai-mono-list")
+        .select("*")
+        .eq("user_id", user.id);
 
+      const pairList = await supabase
+        .from("kai-mono-list")
+        .select("*")
+        .eq("user_id", userDataId.user_id);
+
+      //新規ユーザー登録処理
       if (session) {
-        const findData = userData.data.findIndex((data) => {
+        const findData = userQuery.data.findIndex((data) => {
           return data.user_id === session.id;
         });
         if (findData === -1 && session) {
           try {
-            //Todo ユニークなIDの発行が必要
             const initialUser = {
               id: makeId(),
               user_id: session.id,
@@ -97,11 +105,14 @@ const Container = (props: Props) => {
           }
         }
       }
+      
       const listData = list.data as ItemsData[];
-      const appItem = listData.filter(
+      const pairListData = pairList.data as ItemsData[];
+      const convretList = [...listData, ...pairListData];
+      const appItem = convretList.filter(
         (item) => item.approve === true && item.shopped === false
       );
-      const waitItem = listData.filter((item) => item.approve === false);
+      const waitItem = convretList.filter((item) => item.approve === false);
       setApproveItems(appItem);
       setWaitApproveItems(waitItem);
 
