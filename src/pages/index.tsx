@@ -12,7 +12,6 @@ import { List } from "../components/List";
 import { supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
-import { useRouter } from "next/dist/client/router";
 import { User } from "@supabase/supabase-js";
 import { Layout } from "../components/Layout";
 
@@ -74,15 +73,19 @@ const Container = (props: Props) => {
       const userDataId = userData.find((d) => {
         return d.pairUser === user.id;
       });
+      const allList = await supabase.from("kai-mono-list").select();
       const list = await supabase
         .from("kai-mono-list")
         .select("*")
         .eq("user_id", user.id);
 
-      const pairList = await supabase
-        .from("kai-mono-list")
-        .select("*")
-        .eq("user_id", userDataId.user_id);
+      let pairList;
+      if (userDataId) {
+        pairList = await supabase
+          .from("kai-mono-list")
+          .select("*")
+          .eq("user_id", userDataId.user_id);
+      }
 
       //新規ユーザー登録処理
       if (session) {
@@ -105,19 +108,27 @@ const Container = (props: Props) => {
           }
         }
       }
-      
-      const listData = list.data as ItemsData[];
-      const pairListData = pairList.data as ItemsData[];
-      const convretList = [...listData, ...pairListData];
-      const appItem = convretList.filter(
-        (item) => item.approve === true && item.shopped === false
-      );
-      const waitItem = convretList.filter((item) => item.approve === false);
-      setApproveItems(appItem);
-      setWaitApproveItems(waitItem);
 
+      const listData = list.data as ItemsData[];
+      if (pairList) {
+        const pairListData = pairList.data as ItemsData[];
+        const convretList = [...listData, ...pairListData];
+        const appItem = convretList.filter(
+          (item) => item.approve === true && item.shopped === false
+        );
+        const waitItem = convretList.filter((item) => item.approve === false);
+        setApproveItems(appItem);
+        setWaitApproveItems(waitItem);
+      } else {
+        const appItem = listData.filter(
+          (item) => item.approve === true && item.shopped === false
+        );
+        const waitItem = listData.filter((item) => item.approve === false);
+        setApproveItems(appItem);
+        setWaitApproveItems(waitItem);
+      }
       const maxNum = Math.max(
-        ...listData.map((i) => {
+        ...allList.data.map((i) => {
           if (!i) {
             return 0;
           } else {

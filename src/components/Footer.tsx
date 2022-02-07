@@ -42,7 +42,9 @@ export const Footer: VFC = () => {
       const returnData = data.find((d) => {
         return d.user_id === authUser.id;
       });
-      setUserName(returnData.user_name);
+      if (returnData.user_name) {
+        setUserName(returnData.user_name);
+      }
     }
   };
 
@@ -68,7 +70,9 @@ export const Footer: VFC = () => {
         if (error) {
           throw new Error("情報の取得に失敗しました");
         }
-        const result: UserState = data.find((d) => d.user_name === searchUserName);
+        const result: UserState = data.find(
+          (d) => d.user_name === searchUserName
+        );
         result
           ? setResultName(result.user_name)
           : setResultName("ユーザーが見つかりませんでした");
@@ -86,7 +90,10 @@ export const Footer: VFC = () => {
     const pairUser = data.find((d) => {
       return d.user_name === resultName;
     });
-    await supabase.from("user").update({ pairUser: pairUser.user_id }).eq("user_id", user.id)
+    await supabase
+      .from("user")
+      .update({ pairUser: pairUser.user_id })
+      .eq("user_id", user.id);
     setResultName("");
     toggle();
   };
@@ -98,7 +105,7 @@ export const Footer: VFC = () => {
     } else {
       router.push("/");
     }
-  }
+  };
 
   return (
     <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-16 sm:h-20">
@@ -121,7 +128,11 @@ export const Footer: VFC = () => {
             <Typography.Text>過去の買い物リスト</Typography.Text>
           </Dropdown.Item>,
 
-          <Dropdown.Item icon={<IconSearch />} onClick={toggle} disabled={!user || router.pathname !== "/" && true}>
+          <Dropdown.Item
+            icon={<IconSearch />}
+            onClick={toggle}
+            disabled={!user || (router.pathname !== "/" && true)}
+          >
             <Typography.Text>ユーザーを探す</Typography.Text>
           </Dropdown.Item>,
 
@@ -132,10 +143,7 @@ export const Footer: VFC = () => {
             <Typography.Text>このアプリについて</Typography.Text>
           </Dropdown.Item>,
           <Divider light />,
-          <Dropdown.Item
-            icon={<IconLogOut />}
-            onClick={onClickSignOut}
-          >
+          <Dropdown.Item icon={<IconLogOut />} onClick={onClickSignOut}>
             {user ? "ログアウト" : "ログイン"}
           </Dropdown.Item>,
         ]}
