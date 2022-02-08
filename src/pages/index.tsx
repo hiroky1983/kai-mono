@@ -261,7 +261,7 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <Auth.UserContextProvider supabaseClient={supabase}>
-        <div className="mx-4 mt-6">
+        <div className="mx-5 mt-6">
           <Container>
             <div>
               <div className="w-full sm:w-96">

@@ -4,6 +4,7 @@ import useSWR, { useSWRConfig } from "swr";
 import { ItemsData } from ".";
 import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
+import { NotFound } from "./NotFound";
 
 const user = supabase.auth.user();
 
@@ -32,8 +33,7 @@ const History: NextPage = () => {
 
   if (!user && data) router.replace("/");
   if (!data) return <p className="text-center">データがありません</p>;
-  if (error) return <p className="text-center">データの取得に失敗しました。</p>;
-
+  if (error) return <NotFound />
   const reverseItem = async (i: number) => {
     const clickData = data[i];
     await supabase
@@ -54,7 +54,7 @@ const History: NextPage = () => {
 
   return (
     <Layout>
-      <div className="mt-4 mx-4">
+      <div className="mt-5 mx-4">
         <h2 className="text-xl underline">過去のリスト</h2>
         <ul>
           {data.map((d, i) => {
