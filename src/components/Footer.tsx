@@ -22,6 +22,7 @@ import {
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
 import { UserState } from "../pages";
+import { User } from "@supabase/supabase-js";
 
 const THIS_YEAR = new Date().getFullYear();
 
@@ -35,12 +36,11 @@ export const Footer: VFC = () => {
   const [resultName, setResultName] = useState("");
 
   const userData = async () => {
-    const user = await supabase.from("user").select();
-    const data = user.data;
-    const authUser = supabase.auth.user();
-    if (authUser) {
+    const authUser = await supabase.from("user").select();
+    const data = authUser.data;
+    if (user) {
       const returnData = data.find((d) => {
-        return d.user_id === authUser.id;
+        return d.user_id === user.id;
       });
       if (returnData.user_name) {
         setUserName(returnData.user_name);
@@ -109,7 +109,7 @@ export const Footer: VFC = () => {
 
   return (
     <footer className="flex text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center justify-between h-16 sm:h-20">
-      <small lang="en" className="ml-2">
+      <small lang="en" className="ml-5">
         &copy; {THIS_YEAR} hirocky1983 All Rights Reserved.
       </small>
       <Dropdown
@@ -117,7 +117,7 @@ export const Footer: VFC = () => {
         overlay={[
           <Dropdown.Item>
             <Typography.Text>
-              {userName ? userName : "ユーザー名はありません"}
+              {user && userName ? userName : "ユーザー名はありません"}
             </Typography.Text>
           </Dropdown.Item>,
           <Divider light />,
@@ -127,7 +127,6 @@ export const Footer: VFC = () => {
           >
             <Typography.Text>過去の買い物リスト</Typography.Text>
           </Dropdown.Item>,
-
           <Dropdown.Item
             icon={<IconSearch />}
             onClick={toggle}
@@ -135,7 +134,6 @@ export const Footer: VFC = () => {
           >
             <Typography.Text>ユーザーを探す</Typography.Text>
           </Dropdown.Item>,
-
           <Dropdown.Item
             icon={<IconBook />}
             onClick={() => router.push("/about")}
