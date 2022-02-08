@@ -16,7 +16,7 @@ export type theme = {
 };
 
 export const Header: VFC = () => {
-  const { isDarkMode, setIsDarkMode, toggleDarkMode } =
+  const { isDarkMode, toggleDarkMode } =
     useContext<theme>(Theme);
 
   return (
