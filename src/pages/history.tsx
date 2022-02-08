@@ -32,7 +32,7 @@ const History: NextPage = () => {
   const router = useRouter();
 
   if (!user && data) router.replace("/");
-  if (!data) return <p className="text-center">データがありません</p>;
+  if (!data) return <Layout><p className="text-center">データがありません</p></Layout>;
   if (error) return <NotFound />
   const reverseItem = async (i: number) => {
     const clickData = data[i];
