@@ -5,19 +5,30 @@ import { ItemsData } from ".";
 import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
 
+const user = supabase.auth.user();
+
 const fecther = async (): Promise<ItemsData[]> => {
-  const fetch = await supabase.from("kai-mono-list").select();
+  const fetch = await supabase.from("kai-mono-list").select("*").eq("user_id", user.id);
   const filterData = fetch.data.filter((d) => {
     return d.approve === true && d.shopped === true;
   });
-  return filterData;
+  const userQuery = await supabase.from("user").select();
+  const userData = userQuery.data;
+  const userDataId = userData.filter((d) => {
+    return d.pairUser === user.id;
+  });
+  const filterPairUser = userDataId.find((d) => {
+    return d.user_name !== "テストユーザー";
+  })
+  const pairKiaMonoList = await supabase.from("kai-mono-list").select("*").eq("user_id", filterPairUser.user_id).eq("approve", true).eq("shopped", true);
+
+  return [...filterData, ...pairKiaMonoList.data];
 };
 
 const History: NextPage = () => {
   const { data, error } = useSWR("historyData", fecther);
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const user = supabase.auth.user();
 
   if (!user && data) router.replace("/");
   if (!data) return <p className="text-center">データがありません</p>;
