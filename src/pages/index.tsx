@@ -283,7 +283,6 @@ const Home: NextPage = () => {
                         email: process.env.NEXT_PUBLIC_SAMPLE_EMAIL,
                         password: process.env.NEXT_PUBLIC_SAMPLE_PASSWORD,
                       });
-                      console.log(user, error);
                     } catch (error) {
                       console.error(error);
                     }
