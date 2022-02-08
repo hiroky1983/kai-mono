@@ -3,8 +3,6 @@ import { User } from "@supabase/supabase-js";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import {
   createContext,
-  Dispatch,
-  SetStateAction,
   useEffect,
   useState,
 } from "react";
