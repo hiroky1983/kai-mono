@@ -280,8 +280,8 @@ const Home: NextPage = () => {
                   onClick={async () => {
                     try {
                       const { user, error } = await supabase.auth.signIn({
-                        email: "hirockysun@gmail.com",
-                        password: "sa198308",
+                        email: process.env.NEXT_PUBLIC_SAMPLE_EMAIL,
+                        password: process.env.NEXT_PUBLIC_SAMPLE_PASSWORD,
                       });
                       console.log(user, error);
                     } catch (error) {
