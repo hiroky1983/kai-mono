@@ -1,3 +1,4 @@
+import { Center, ChakraProvider, Spinner } from "@chakra-ui/react";
 import { User } from "@supabase/supabase-js";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import {
@@ -9,7 +10,6 @@ import {
 } from "react";
 import "tailwindcss/tailwind.css";
 import { theme } from "../components/Header";
-import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
 
 let isDarkMode;
@@ -61,10 +61,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <Theme.Provider value={{ isDarkMode, setIsDarkMode, toggleDarkMode }}>
-      <Component {...pageProps} />
-    </Theme.Provider>
-  );
+    <ChakraProvider >
+      <Theme.Provider value={{ isDarkMode, setIsDarkMode, toggleDarkMode }}>
+        <Component {...pageProps} />
+      </Theme.Provider>
+    </ChakraProvider>
+  )
 }
-
 export default MyApp;

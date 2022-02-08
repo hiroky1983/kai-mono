@@ -1,3 +1,4 @@
+import { Center, Spinner } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import useSWR, { useSWRConfig } from "swr";
@@ -32,7 +33,7 @@ const History: NextPage = () => {
   const router = useRouter();
 
   if (!user && data) router.replace("/");
-  if (!data) return <Layout><p className="text-center">データがありません</p></Layout>;
+  if (!data) return <Layout><Center><Spinner color="#65D8A5" /></Center></Layout>;
   if (error) return <NotFound />
   const reverseItem = async (i: number) => {
     const clickData = data[i];

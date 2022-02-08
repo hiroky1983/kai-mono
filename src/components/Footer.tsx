@@ -22,7 +22,7 @@ import {
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
 import { UserState } from "../pages";
-import { User } from "@supabase/supabase-js";
+import { useAlert } from "../libs/hooks/useAlert";
 
 const THIS_YEAR = new Date().getFullYear();
 
@@ -34,6 +34,8 @@ export const Footer: VFC = () => {
   const [searchUserName, setSearchUserName] = useState("");
   const [userName, setUserName] = useState("");
   const [resultName, setResultName] = useState("");
+  const doneSave = useAlert("保存しました", "success");
+  const undoneSave = useAlert("保存に失敗しました", "error");
 
   const userData = async () => {
     const authUser = await supabase.from("user").select();
@@ -85,17 +87,23 @@ export const Footer: VFC = () => {
   };
 
   const onClickAddPairUser = async () => {
-    const conversionPairUser = await supabase.from("user").select();
-    const data = conversionPairUser.data;
-    const pairUser = data.find((d) => {
-      return d.user_name === resultName;
-    });
-    await supabase
-      .from("user")
-      .update({ pairUser: pairUser.user_id })
-      .eq("user_id", user.id);
-    setResultName("");
-    toggle();
+    try {
+      const conversionPairUser = await supabase.from("user").select();
+      const data = conversionPairUser.data;
+      const pairUser = data.find((d) => {
+        return d.user_name === resultName;
+      });
+      await supabase
+        .from("user")
+        .update({ pairUser: pairUser.user_id })
+        .eq("user_id", user.id);
+      setResultName("");
+      doneSave();
+      toggle();
+    } catch (error) {
+      console.log(error);
+      undoneSave();
+    }
   };
 
   const onClickSignOut = () => {
