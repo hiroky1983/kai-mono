@@ -69,13 +69,13 @@ const History: NextPage = () => {
                   onClick={() => {
                     reverseItem(i);
                   }}
-                  className="inline-block px-3 py-1 bg-primary text-white rounded-lg"
+                  className="inline-block font-bold px-3 py-1 bg-primary text-white rounded-lg"
                 >
                   再購入
                 </button>
                 <button
                   onClick={() => onClickDeleteItems(i)}
-                  className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg"
+                  className="inline-block font-bold px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg"
                 >
                   削除
                 </button>

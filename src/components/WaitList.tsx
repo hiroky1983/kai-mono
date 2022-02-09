@@ -20,13 +20,13 @@ export const WaitList: VFC<Props> = (props) => {
         <li className="flex-grow">{item.itemName}</li>
         <button
           onClick={onClickAddItems}
-          className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-primary text-white rounded-lg"
+          className="inline-block font-bold px-3 lg:px-5 py-1 lg:py-2 bg-primary text-white rounded-lg"
         >
           OK
         </button>
         <button
           onClick={onClickDeleteItems}
-          className="inline-block px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg"
+          className="inline-block font-bold px-3 lg:px-5 py-1 lg:py-2 bg-white text-primary rounded-lg"
         >
           {user.id === item.user_id ? "削除" : "要らない"}
         </button>

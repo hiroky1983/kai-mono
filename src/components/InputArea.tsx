@@ -19,7 +19,7 @@ export const InputArea: VFC<Props> = (porps) => {
       />
       <button
         onClick={onClickAddWaitItems}
-        className="inline-block px-3 lg:px-4 py-1 lg:py-2  bg-primary text-white rounded-lg"
+        className="inline-block font-bold px-3 lg:px-4 py-1 lg:py-2  bg-primary text-white rounded-lg"
       >
         追加
       </button>
