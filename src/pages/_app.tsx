@@ -1,5 +1,4 @@
-import { Center, ChakraProvider, Spinner } from "@chakra-ui/react";
-import { User } from "@supabase/supabase-js";
+import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/dist/shared/lib/router/router";
 import {
   createContext,
