@@ -7,7 +7,6 @@ import {
 } from "react";
 import "tailwindcss/tailwind.css";
 import { theme } from "../components/Header";
-import { useAuth } from "../libs/hooks/useAuth";
 import { supabase } from "../libs/supabase";
 
 let isDarkMode;
@@ -30,11 +29,6 @@ const darkMode = (isDarkMode: boolean) => {
 function MyApp({ Component, pageProps }: AppProps) {
   const user = supabase.auth.user();
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const { session, user: useUser } = useAuth();
-  console.log(session);
-  console.log(useUser);
-
-
 
   const toggleDarkMode = async () => {
     darkMode(!isDarkMode);

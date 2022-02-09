@@ -14,7 +14,6 @@ import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
 import { User } from "@supabase/supabase-js";
 import { Layout } from "../components/Layout";
-import { useAlert } from "../libs/hooks/useAlert";
 
 type Props = {
   children: ReactNode;

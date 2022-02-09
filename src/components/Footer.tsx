@@ -52,7 +52,7 @@ export const Footer: VFC = () => {
 
   useEffect(() => {
     userData();
-  }, []);
+  }, [user]);
 
   const onChangeEmail: InputHTMLAttributes<HTMLInputElement>["onChange"] =
     useCallback((e) => setSearchUserName(e.target.value), [searchUserName]);
