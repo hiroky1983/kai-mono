@@ -12,7 +12,7 @@ import { List } from "../components/List";
 import { supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
-import { User } from "@supabase/supabase-js";
+import { PostgrestResponse, User } from "@supabase/supabase-js";
 import { Layout } from "../components/Layout";
 
 type Props = {
@@ -79,7 +79,7 @@ const Container = (props: Props) => {
         .select("*")
         .eq("user_id", user.id);
 
-      let pairList;
+      let pairList: PostgrestResponse<any>;
       if (userDataId) {
         pairList = await supabase
           .from("kai-mono-list")
@@ -189,12 +189,15 @@ const Container = (props: Props) => {
       const updateItem = item.map((update) => {
         return { ...update, shopped: true };
       });
-
-      await supabase
+      const { data: shoppedItem, error } = await supabase
         .from("kai-mono-list")
         .update({ shopped: updateItem[0].shopped })
         .eq("id", updateItem[0].id);
       setApproveItems(newItems);
+
+      supabase.from("kai-mono-list").on("UPDATE", payload => {
+        shoppedItem === payload.new
+      }).subscribe()
     },
     [approveItems]
   );
