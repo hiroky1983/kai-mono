@@ -62,10 +62,18 @@ const Container = (props: Props) => {
     console.log(payload);
     setWaitApproveItems([...waitApproveItems, payload.new]);
   }
+  const handleDelete = (payload) => {
+    console.log(payload);
+    const deleteItem = waitApproveItems.find((item) => item.id === payload.old);
+    console.log(deleteItem);
+  }
 
   useEffect(() => {
     const sub = supabase.from("kai-mono-list").on("INSERT", handleInsert).subscribe();
-  }, [waitApproveItems])
+  }, [waitApproveItems]);
+  // useEffect(() => {
+  //   const sub = supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
+  // }, [waitApproveItems])
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (e, session) => {
@@ -219,6 +227,7 @@ const Container = (props: Props) => {
       const item = newItems.splice(i, 1);
       await supabase.from("kai-mono-list").delete().eq("id", item[0].id);
       setWaitApproveItems(newItems);
+      supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe()
     },
     [waitApproveItems]
   );
