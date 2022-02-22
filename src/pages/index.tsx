@@ -48,11 +48,24 @@ const makeId = () => {
 
 const Container = (props: Props) => {
   const [inputText, setInputText] = useState("");
-  const [waitApproveItems, setWaitApproveItems] = useState<ItemsData[]>();
-  const [approveItems, setApproveItems] = useState<ItemsData[]>();
+  const [waitApproveItems, setWaitApproveItems] = useState<ItemsData[]>([]);
+  const [approveItems, setApproveItems] = useState<ItemsData[]>([]);
   const [maxId, setMaxId] = useState(0);
   const [session, setSession] = useState<User>(null);
   const { user } = Auth.useUser();
+
+  console.log(waitApproveItems);
+
+
+  const handleInsert = (payload: { new: ItemsData }) => {
+    console.log(waitApproveItems);
+    console.log(payload);
+    setWaitApproveItems([...waitApproveItems, payload.new]);
+  }
+
+  useEffect(() => {
+    const sub = supabase.from("kai-mono-list").on("INSERT", handleInsert).subscribe();
+  }, [waitApproveItems])
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (e, session) => {
@@ -61,7 +74,7 @@ const Container = (props: Props) => {
       }
     });
     getData();
-  }, [user, setWaitApproveItems]);
+  }, []);
 
   const getData = async () => {
     try {
@@ -86,7 +99,6 @@ const Container = (props: Props) => {
           .select("*")
           .eq("user_id", userDataId.user_id);
       }
-
       //新規ユーザー登録処理
       if (session) {
         const findData = userQuery.data.findIndex((data) => {
@@ -108,7 +120,6 @@ const Container = (props: Props) => {
           }
         }
       }
-
       const listData = list.data as ItemsData[];
       if (pairList) {
         const pairListData = pairList.data as ItemsData[];
@@ -156,8 +167,8 @@ const Container = (props: Props) => {
       shopped: false,
       created_at: new Date(),
     };
-    const newItems = [...waitApproveItems, updateData];
-    setWaitApproveItems(newItems);
+    // const newItems = [...waitApproveItems, updateData];
+    // setWaitApproveItems(newItems);
     await supabase.from("kai-mono-list").insert(updateData);
     setInputText("");
     setMaxId(maxId + 1);
