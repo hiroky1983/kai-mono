@@ -56,20 +56,22 @@ const Container = (props: Props) => {
 
   console.log(waitApproveItems);
 
-
   const handleInsert = (payload: { new: ItemsData }) => {
     console.log(waitApproveItems);
     console.log(payload);
     setWaitApproveItems([...waitApproveItems, payload.new]);
-  }
+  };
   const handleDelete = (payload) => {
     console.log(payload);
     const deleteItem = waitApproveItems.find((item) => item.id === payload.old);
     console.log(deleteItem);
-  }
+  };
 
   useEffect(() => {
-    const sub = supabase.from("kai-mono-list").on("INSERT", handleInsert).subscribe();
+    const sub = supabase
+      .from("kai-mono-list")
+      .on("INSERT", handleInsert)
+      .subscribe();
   }, [waitApproveItems]);
   // useEffect(() => {
   //   const sub = supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
@@ -82,7 +84,7 @@ const Container = (props: Props) => {
       }
     });
     getData();
-  }, []);
+  }, [user]);
 
   const getData = async () => {
     try {
@@ -214,9 +216,12 @@ const Container = (props: Props) => {
         .eq("id", updateItem[0].id);
       setApproveItems(newItems);
 
-      supabase.from("kai-mono-list").on("UPDATE", payload => {
-        shoppedItem === payload.new
-      }).subscribe()
+      supabase
+        .from("kai-mono-list")
+        .on("UPDATE", (payload) => {
+          shoppedItem === payload.new;
+        })
+        .subscribe();
     },
     [approveItems]
   );
@@ -227,7 +232,7 @@ const Container = (props: Props) => {
       const item = newItems.splice(i, 1);
       await supabase.from("kai-mono-list").delete().eq("id", item[0].id);
       setWaitApproveItems(newItems);
-      supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe()
+      supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
     },
     [waitApproveItems]
   );
