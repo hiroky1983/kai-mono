@@ -56,26 +56,41 @@ const Container = (props: Props) => {
 
   console.log(waitApproveItems);
 
-  const handleInsert = (payload: { new: ItemsData }) => {
-    console.log(waitApproveItems);
-    console.log(payload);
+  const handleInsertWaitItems = (payload: { new: ItemsData }) => {
     setWaitApproveItems([...waitApproveItems, payload.new]);
   };
-  const handleDelete = (payload) => {
+  const handleInsertApproveItems = (payload: {
+    new: ItemsData;
+    old: { id: number };
+  }) => {
     console.log(payload);
-    const deleteItem = waitApproveItems.find((item) => item.id === payload.old);
-    console.log(deleteItem);
+    setApproveItems([...approveItems, payload.new]);
+    setWaitApproveItems(
+      waitApproveItems.filter((item) => item.id !== payload.old.id)
+    );
+  };
+  const handleDelete = (payload: { old: { id: number } }) => {
+    const deleteItem = waitApproveItems.filter(
+      (item) => item.id !== payload.old.id
+    );
+    setWaitApproveItems(deleteItem);
   };
 
   useEffect(() => {
-    const sub = supabase
+    supabase
       .from("kai-mono-list")
-      .on("INSERT", handleInsert)
+      .on("INSERT", handleInsertWaitItems)
       .subscribe();
   }, [waitApproveItems]);
-  // useEffect(() => {
-  //   const sub = supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
-  // }, [waitApproveItems])
+  useEffect(() => {
+    supabase
+      .from("kai-mono-list")
+      .on("UPDATE", handleInsertApproveItems)
+      .subscribe();
+  }, [waitApproveItems, approveItems]);
+  useEffect(() => {
+    supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
+  }, [waitApproveItems]);
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (e, session) => {
@@ -177,8 +192,6 @@ const Container = (props: Props) => {
       shopped: false,
       created_at: new Date(),
     };
-    // const newItems = [...waitApproveItems, updateData];
-    // setWaitApproveItems(newItems);
     await supabase.from("kai-mono-list").insert(updateData);
     setInputText("");
     setMaxId(maxId + 1);
@@ -196,9 +209,6 @@ const Container = (props: Props) => {
         .from("kai-mono-list")
         .update({ approve: updateItem[0].approve })
         .eq("id", updateItem[0].id);
-      const newItems = [...approveItems, waitApproveItems[i]];
-      setWaitApproveItems(newWaitItems);
-      setApproveItems(newItems);
     },
     [waitApproveItems, approveItems]
   );
@@ -231,8 +241,8 @@ const Container = (props: Props) => {
       const newItems = [...waitApproveItems];
       const item = newItems.splice(i, 1);
       await supabase.from("kai-mono-list").delete().eq("id", item[0].id);
-      setWaitApproveItems(newItems);
-      supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
+      // setWaitApproveItems(newItems);
+      // supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
     },
     [waitApproveItems]
   );
