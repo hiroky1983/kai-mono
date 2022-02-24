@@ -91,15 +91,16 @@ const Container = (props: Props) => {
   }, [waitApproveItems]);
   useEffect(() => {
     console.log("====UGOITA!============");
-    supabase
-      .from("kai-mono-list")
-      .on("UPDATE", handleInsertApproveItems)
-      .subscribe();
-  }, [waitApproveItems, approveItems]);
-  useEffect(() => {
-    console.log("====HGOITA!============");
-    supabase.from("kai-mono-list").on("UPDATE", handleShopped).subscribe();
-  }, [isShopped]);
+    if (isApprove) {
+      supabase
+        .from("kai-mono-list")
+        .on("UPDATE", handleInsertApproveItems)
+        .subscribe();
+    } else if (isShopped) {
+      supabase.from("kai-mono-list").on("UPDATE", handleShopped).subscribe();
+    }
+  }, [waitApproveItems, approveItems, isApprove, isShopped]);
+
   useEffect(() => {
     supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
   }, [waitApproveItems]);
