@@ -87,7 +87,7 @@ const Container = (props: Props) => {
       .on("INSERT", handleInsertWaitItems)
       .subscribe();
   }, [waitApproveItems]);
-  
+
   useEffect(() => {
     if (isApprove) {
       supabase
@@ -159,11 +159,11 @@ const Container = (props: Props) => {
       const listData = list.data as ItemsData[];
       if (pairList) {
         const pairListData = pairList.data as ItemsData[];
-        const convretList = [...listData, ...pairListData];
-        const appItem = convretList.filter(
+        const convertList = [...listData, ...pairListData];
+        const appItem = convertList.filter(
           (item) => item.approve === true && item.shopped === false
         );
-        const waitItem = convretList.filter((item) => item.approve === false);
+        const waitItem = convertList.filter((item) => item.approve === false);
         setApproveItems(appItem);
         setWaitApproveItems(waitItem);
       } else {
