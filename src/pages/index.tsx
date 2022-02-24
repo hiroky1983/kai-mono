@@ -69,11 +69,9 @@ const Container = (props: Props) => {
     );
   };
   const handleShopped = (payload: { old: { id: number } }) => {
-    console.log(payload);
     const newApproveItems = approveItems.filter((item) => {
       return item.id !== payload.old.id;
     });
-    console.log(newApproveItems);
     setApproveItems(newApproveItems);
   };
   const handleDelete = (payload: { old: { id: number } }) => {
@@ -90,7 +88,6 @@ const Container = (props: Props) => {
       .subscribe();
   }, [waitApproveItems]);
   useEffect(() => {
-    console.log("====UGOITA!============");
     if (isApprove) {
       supabase
         .from("kai-mono-list")
