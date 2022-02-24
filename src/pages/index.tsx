@@ -87,6 +87,7 @@ const Container = (props: Props) => {
       .on("INSERT", handleInsertWaitItems)
       .subscribe();
   }, [waitApproveItems]);
+  
   useEffect(() => {
     if (isApprove) {
       supabase
@@ -127,7 +128,7 @@ const Container = (props: Props) => {
         .select("*")
         .eq("user_id", user.id);
 
-      let pairList: PostgrestResponse<any>;
+      let pairList: PostgrestResponse<ItemsData>;
       if (userDataId) {
         pairList = await supabase
           .from("kai-mono-list")
@@ -237,7 +238,6 @@ const Container = (props: Props) => {
         .from("kai-mono-list")
         .update({ shopped: updateItem[0].shopped })
         .eq("id", updateItem[0].id);
-      // setApproveItems(newItems);
       setIsShopped(false);
     },
     [approveItems]
@@ -248,8 +248,6 @@ const Container = (props: Props) => {
       const newItems = [...waitApproveItems];
       const item = newItems.splice(i, 1);
       await supabase.from("kai-mono-list").delete().eq("id", item[0].id);
-      // setWaitApproveItems(newItems);
-      // supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
     },
     [waitApproveItems]
   );
