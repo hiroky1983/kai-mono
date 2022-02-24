@@ -52,9 +52,9 @@ const Container = (props: Props) => {
   const [approveItems, setApproveItems] = useState<ItemsData[]>([]);
   const [maxId, setMaxId] = useState(0);
   const [session, setSession] = useState<User>(null);
+  const [isApprove, setIsApprove] = useState(false);
+  const [isShopped, setIsShopped] = useState(false);
   const { user } = Auth.useUser();
-
-  console.log(waitApproveItems);
 
   const handleInsertWaitItems = (payload: { new: ItemsData }) => {
     setWaitApproveItems([...waitApproveItems, payload.new]);
@@ -63,11 +63,18 @@ const Container = (props: Props) => {
     new: ItemsData;
     old: { id: number };
   }) => {
-    console.log(payload);
     setApproveItems([...approveItems, payload.new]);
     setWaitApproveItems(
       waitApproveItems.filter((item) => item.id !== payload.old.id)
     );
+  };
+  const handleShopped = (payload: { old: { id: number } }) => {
+    console.log(payload);
+    const newApproveItems = approveItems.filter((item) => {
+      return item.id !== payload.old.id;
+    });
+    console.log(newApproveItems);
+    setApproveItems(newApproveItems);
   };
   const handleDelete = (payload: { old: { id: number } }) => {
     const deleteItem = waitApproveItems.filter(
@@ -83,11 +90,16 @@ const Container = (props: Props) => {
       .subscribe();
   }, [waitApproveItems]);
   useEffect(() => {
+    console.log("====UGOITA!============");
     supabase
       .from("kai-mono-list")
       .on("UPDATE", handleInsertApproveItems)
       .subscribe();
   }, [waitApproveItems, approveItems]);
+  useEffect(() => {
+    console.log("====HGOITA!============");
+    supabase.from("kai-mono-list").on("UPDATE", handleShopped).subscribe();
+  }, [isShopped]);
   useEffect(() => {
     supabase.from("kai-mono-list").on("DELETE", handleDelete).subscribe();
   }, [waitApproveItems]);
@@ -199,6 +211,7 @@ const Container = (props: Props) => {
 
   const onClickAddItems = useCallback(
     async (i: number) => {
+      setIsApprove(true);
       const newWaitItems = [...waitApproveItems];
       const item = newWaitItems.splice(i, 1);
       const updateItem = item.map((update) => {
@@ -209,12 +222,14 @@ const Container = (props: Props) => {
         .from("kai-mono-list")
         .update({ approve: updateItem[0].approve })
         .eq("id", updateItem[0].id);
+      setIsApprove(false);
     },
     [waitApproveItems, approveItems]
   );
 
   const onClickShoppedItems = useCallback(
     async (i: number) => {
+      setIsShopped(true);
       const newItems = [...approveItems];
       const item = newItems.splice(i, 1);
       const updateItem = item.map((update) => {
@@ -224,14 +239,8 @@ const Container = (props: Props) => {
         .from("kai-mono-list")
         .update({ shopped: updateItem[0].shopped })
         .eq("id", updateItem[0].id);
-      setApproveItems(newItems);
-
-      supabase
-        .from("kai-mono-list")
-        .on("UPDATE", (payload) => {
-          shoppedItem === payload.new;
-        })
-        .subscribe();
+      // setApproveItems(newItems);
+      setIsShopped(false);
     },
     [approveItems]
   );
