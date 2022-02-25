@@ -31,9 +31,12 @@ const History: NextPage = () => {
   const { data, error } = useSWR("historyData", fecther);
   const { mutate } = useSWRConfig();
   const router = useRouter();
+  console.log(data);
+  console.log(error);
+
 
   if (!user && data) router.replace("/");
-  if (!data) return <Layout><Center><Spinner color="#65D8A5" /></Center></Layout>;
+  if (!data) return <Layout><p className="flex justify-center">データはありません</p></Layout>
   if (error) return <NotFound />
   const reverseItem = async (i: number) => {
     const clickData = data[i];
