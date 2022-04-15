@@ -136,7 +136,7 @@ const About: NextPage = () => {
               right: "20px",
               padding: "18px",
               fontSize: "20px",
-              fontWeight: "bold"
+              fontWeight: "bold",
             }}
             onClick={() => router.push("/")}
           >

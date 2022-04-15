@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import React from "react";
+
 import { List } from "../components/List";
 import { supabase } from "../libs/supabase";
 import { WaitList } from "../components/WaitList";
@@ -15,19 +15,10 @@ import { InputArea } from "../components/InputArea";
 import { PostgrestResponse, User } from "@supabase/supabase-js";
 import { Layout } from "../components/Layout";
 import { ItemsData } from "../libs/type";
+import { makeId } from "../functions/function";
 
 type Props = {
   children: ReactNode;
-};
-
-const makeId = () => {
-  const S = "0123456789";
-  const N = 16;
-  const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
-    .map((n) => S[n % S.length])
-    .join("");
-  const fileName = randomChar;
-  return parseInt(fileName);
 };
 
 const Container = (props: Props) => {

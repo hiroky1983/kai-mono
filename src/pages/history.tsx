@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import useSWR, { useSWRConfig } from "swr";
+
 import { ItemsData } from "../libs/type";
 import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
@@ -9,7 +10,10 @@ import { NotFound } from "./NotFound";
 const user = supabase.auth.user();
 
 const fecther = async (): Promise<ItemsData[]> => {
-  const fetch = await supabase.from("kai-mono-list").select("*").eq("user_id", user.id);
+  const fetch = await supabase
+    .from("kai-mono-list")
+    .select("*")
+    .eq("user_id", user.id);
   const filterData = fetch.data.filter((d) => {
     return d.approve === true && d.shopped === true;
   });
@@ -20,8 +24,13 @@ const fecther = async (): Promise<ItemsData[]> => {
   });
   const filterPairUser = userDataId.find((d) => {
     return d.user_name !== "テストユーザー";
-  })
-  const pairKiaMonoList = await supabase.from("kai-mono-list").select("*").eq("user_id", filterPairUser.user_id).eq("approve", true).eq("shopped", true);
+  });
+  const pairKiaMonoList = await supabase
+    .from("kai-mono-list")
+    .select("*")
+    .eq("user_id", filterPairUser.user_id)
+    .eq("approve", true)
+    .eq("shopped", true);
 
   return [...filterData, ...pairKiaMonoList.data];
 };
@@ -30,13 +39,16 @@ const History: NextPage = () => {
   const { data, error } = useSWR("historyData", fecther);
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  console.log(data);
-  console.log(error);
-
 
   if (!user && data) router.replace("/");
-  if (!data) return <Layout><p className="flex justify-center">データはありません</p></Layout>
-  if (error) return <NotFound />
+  if (!data)
+    return (
+      <Layout>
+        <p className="flex justify-center">データはありません</p>
+      </Layout>
+    );
+  if (error) return <NotFound />;
+  
   const reverseItem = async (i: number) => {
     const clickData = data[i];
     await supabase
