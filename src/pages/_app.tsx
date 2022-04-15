@@ -1,10 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/dist/shared/lib/router/router";
-import {
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import { theme } from "../components/Header";
 import { supabase } from "../libs/supabase";
@@ -28,6 +24,7 @@ const darkMode = (isDarkMode: boolean) => {
 };
 function MyApp({ Component, pageProps }: AppProps) {
   const user = supabase.auth.user();
+
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleDarkMode = async () => {
@@ -58,11 +55,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [user]);
 
   return (
-    <ChakraProvider >
+    <ChakraProvider>
       <Theme.Provider value={{ isDarkMode, setIsDarkMode, toggleDarkMode }}>
         <Component {...pageProps} />
       </Theme.Provider>
     </ChakraProvider>
-  )
+  );
 }
 export default MyApp;

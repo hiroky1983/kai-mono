@@ -21,7 +21,7 @@ import {
 } from "@supabase/ui";
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
-import { UserState } from "../pages";
+import { UserState } from "../libs/type";
 import { useAlert } from "../libs/hooks/useAlert";
 
 const THIS_YEAR = new Date().getFullYear();

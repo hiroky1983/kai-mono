@@ -1,5 +1,5 @@
 import React, { VFC } from "react";
-import { ItemsData } from "../pages";
+import { ItemsData } from "../libs/type";
 
 type Props = {
   item: ItemsData;

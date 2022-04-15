@@ -1,8 +1,7 @@
-import { Center, Spinner } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useRouter } from "next/dist/client/router";
 import useSWR, { useSWRConfig } from "swr";
-import { ItemsData } from ".";
+import { ItemsData } from "../libs/type";
 import { Layout } from "../components/Layout";
 import { supabase } from "../libs/supabase";
 import { NotFound } from "./NotFound";

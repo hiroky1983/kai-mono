@@ -14,26 +14,10 @@ import { WaitList } from "../components/WaitList";
 import { InputArea } from "../components/InputArea";
 import { PostgrestResponse, User } from "@supabase/supabase-js";
 import { Layout } from "../components/Layout";
+import { ItemsData } from "../libs/type";
 
 type Props = {
   children: ReactNode;
-};
-
-export type ItemsData = {
-  id: number;
-  user_id: string;
-  itemName: string;
-  approve: boolean;
-  shopped: boolean;
-  created_at: Date;
-};
-
-export type UserState = {
-  id: string;
-  pairUser: string;
-  isDarkMode: boolean;
-  user_name: string;
-  avatar_url: string;
 };
 
 const makeId = () => {
