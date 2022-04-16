@@ -1,15 +1,15 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { AppProps } from "next/dist/shared/lib/router/router";
+import type { AppProps } from "next/dist/shared/lib/router/router";
 import { createContext, useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
-import { theme } from "../components/Header";
 import { supabase } from "../libs/supabase";
+import type { ThemeType } from "../libs/type";
 
 let isDarkMode;
 let setIsDarkMode;
 let toggleDarkMode;
 
-export const Theme = createContext<theme>({
+export const Theme = createContext<ThemeType>({
   isDarkMode,
   setIsDarkMode,
   toggleDarkMode,

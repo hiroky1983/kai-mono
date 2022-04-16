@@ -1,5 +1,6 @@
 import useSWR from "swr";
-import { UserState } from "../../libs/type";
+
+import type { UserState } from "../../libs/type";
 import { supabase } from "../supabase";
 
 const fetcheData = async (): Promise<UserState[]> => {

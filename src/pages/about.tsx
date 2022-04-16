@@ -27,7 +27,12 @@ const About: NextPage = () => {
           <div className="grid gap-4 md:flex">
             <div className="w-80 shadow-lg p-8 rounded-lg dark:bg-gray-500">
               <div className="flex justify-center">
-                <Image src="/Shopping-bro .png" width="180px" height="240px" />
+                <Image
+                  src="/Shopping-bro .png"
+                  width="180px"
+                  height="240px"
+                  alt="このアプリで出来ることの説明１"
+                />
               </div>
               <h3 className="py-4 font-bold text-2xl">
                 パートナーとのリストの共有
@@ -40,6 +45,7 @@ const About: NextPage = () => {
                   src="/Add tasks-rafiki .png"
                   width="180px"
                   height="240px"
+                  alt="このアプリで出来ることの説明２"
                 />
               </div>
               <h3 className="py-4 font-bold text-2xl">購入後の完了確認</h3>
@@ -53,6 +59,7 @@ const About: NextPage = () => {
                   src="/Thinking face-rafiki .png"
                   width="180px"
                   height="240px"
+                  alt="このアプリで出来ることの説明３"
                 />
               </div>
               <h3 className="py-4 font-bold text-2xl">
@@ -76,6 +83,7 @@ const About: NextPage = () => {
                   src="/pwadisc1.png"
                   width="320px"
                   height="320px"
+                  alt="PWAの使用方法１"
                 />
               </div>
               <p className="text-lg">①スマホから下の赤枠のボタンを押す</p>
@@ -87,6 +95,7 @@ const About: NextPage = () => {
                   src="/pwadisc2.png"
                   width="320px"
                   height="320px"
+                  alt="PWAの使用方法２"
                 />
               </div>
               <p className="text-lg">②赤枠の『ホーム画面に追加』ボタンを押す</p>
@@ -98,6 +107,7 @@ const About: NextPage = () => {
                   src="/pwadisc3.png"
                   width="320px"
                   height="320px"
+                  alt="PWAの使用方法３"
                 />
               </div>
               <p className="text-lg">③ホーム画面に追加できていればOK</p>
@@ -109,6 +119,7 @@ const About: NextPage = () => {
                   src="/pwadisc4.png"
                   width="320px"
                   height="320px"
+                  alt="PWAの使用方法４"
                 />
               </div>
               <p className="text-lg">
@@ -126,6 +137,7 @@ const About: NextPage = () => {
             src="/kai-mono__1_-removebg-preview.png"
             width="180px"
             height="180px"
+            alt="このアプリのロゴ"
           />
           <Button
             style={{

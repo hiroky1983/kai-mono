@@ -1,6 +1,6 @@
-import { User } from "@supabase/supabase-js";
-import React, { VFC } from "react";
-import { ItemsData } from "../libs/type";
+import type { User } from "@supabase/supabase-js";
+import type { VFC } from "react";
+import type { ItemsData } from "../libs/type";
 
 type Props = {
   item: ItemsData;

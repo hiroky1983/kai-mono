@@ -1,10 +1,5 @@
-import React, {
-  InputHTMLAttributes,
-  useCallback,
-  useEffect,
-  useState,
-  VFC,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
+import type { VFC, InputHTMLAttributes } from "react";
 import {
   Button,
   Divider,
@@ -19,6 +14,7 @@ import {
   Modal,
   Typography,
 } from "@supabase/ui";
+
 import { supabase } from "../libs/supabase";
 import { useRouter } from "next/dist/client/router";
 import { UserState } from "../libs/type";

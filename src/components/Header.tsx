@@ -1,23 +1,14 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  VFC,
-} from "react";
-import { Toggle } from "@supabase/ui";
 import Link from "next/link";
 import Image from "next/image";
-import { Theme } from "../pages/_app";
+import { useContext } from "react";
+import type { VFC } from "react";
+import { Toggle } from "@supabase/ui";
 
-export type theme = {
-  isDarkMode: boolean;
-  setIsDarkMode: Dispatch<SetStateAction<boolean>>;
-  toggleDarkMode: () => void;
-};
+import { Theme } from "../pages/_app";
+import type { ThemeType } from "../libs/type";
 
 export const Header: VFC = () => {
-  const { isDarkMode, toggleDarkMode } =
-    useContext<theme>(Theme);
+  const { isDarkMode, toggleDarkMode } = useContext<ThemeType>(Theme);
 
   return (
     <header className="flex justify-between gap-4 text-gray-600 bg-gray-200 dark:text-white dark:bg-gray-700 items-center p-4 md:px-12 lg:px-18">
@@ -25,7 +16,7 @@ export const Header: VFC = () => {
         <a>
           <Image
             src="/kai-mono__1_-removebg-preview.png"
-            alt="logo"
+            alt="アプリのロゴ"
             width={80}
             height={80}
           />

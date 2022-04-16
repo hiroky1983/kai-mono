@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from "react";
+
 export type ItemsData = {
   id: number;
   user_id: string;
@@ -13,4 +15,10 @@ export type UserState = {
   isDarkMode: boolean;
   user_name: string;
   avatar_url: string;
+};
+
+export type ThemeType = {
+  isDarkMode: boolean;
+  setIsDarkMode: Dispatch<SetStateAction<boolean>>;
+  toggleDarkMode: () => void;
 };
