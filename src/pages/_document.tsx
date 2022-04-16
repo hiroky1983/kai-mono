@@ -48,7 +48,11 @@ class MyDocument extends Document {
           {/* 一般 */}
           <meta name="application-name" content="kai-mono" />
           <meta name="theme-color" content="#65D8A5" />
-          <meta name="description" content="買い物リスト共有アプリです" />
+          <meta name="description" content="買い物リスト共有アプリです。このアプリは『買い物をもっと効率的に』をコンセプトに作成しました。" />
+          <meta
+            name="keywords"
+            content="kai-mono,買い物リスト,リスト,リスト共有,リスト共有アプリ,買い忘れ防止,"
+          />
           <link rel="icon" sizes="192x192" href="/icon-192x192.png" />
           <link rel="icon" href="/favicon.ico" />
           <link rel="manifest" href="/manifest.json" />
