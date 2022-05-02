@@ -48,7 +48,10 @@ class MyDocument extends Document {
           {/* 一般 */}
           <meta name="application-name" content="kai-mono" />
           <meta name="theme-color" content="#65D8A5" />
-          <meta name="description" content="買い物リスト共有アプリです。このアプリは『買い物をもっと効率的に』をコンセプトに作成しました。" />
+          <meta
+            name="description"
+            content="買い物リスト共有アプリです。このアプリは『買い物をもっと効率的に』をコンセプトに作成しました。"
+          />
           <meta
             name="keywords"
             content="kai-mono,買い物,リスト,共有,アプリ,買い忘れ防止,"
@@ -63,6 +66,11 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <title>kai-mono</title>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1869410932032409"
+            crossOrigin="anonymous"
+          ></script>
         </Head>
         <body>
           <Main />
