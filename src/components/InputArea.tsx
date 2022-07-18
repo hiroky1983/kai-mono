@@ -6,6 +6,8 @@ type Props = {
   inputText: string;
 };
 
+const disabledColor = `inline-block font-bold px-3 lg:px-4 py-1 lg:py-2 bg-gray-400 text-white rounded-lg `;
+const buttonColot = `inline-block font-bold px-3 lg:px-4 py-1 lg:py-2 bg-primary text-white rounded-lg`;
 export const InputArea: VFC<Props> = (porps) => {
   const { handleChange, onClickAddWaitItems, inputText } = porps;
   return (
@@ -17,9 +19,11 @@ export const InputArea: VFC<Props> = (porps) => {
         onChange={handleChange}
         value={inputText}
       />
+
       <button
         onClick={onClickAddWaitItems}
-        className="inline-block font-bold px-3 lg:px-4 py-1 lg:py-2  bg-primary text-white rounded-lg"
+        disabled={inputText === ""}
+        className={inputText === "" ? disabledColor : buttonColot}
       >
         追加
       </button>
